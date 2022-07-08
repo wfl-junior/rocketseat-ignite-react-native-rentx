@@ -2,9 +2,8 @@
   "expo": {
     "name": "rentx",
     "slug": "rentx",
-    "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "owner": "wfl-junior",
+    "version": "0.1.0",
+    "assetBundlePatterns": ["**/*"]
   }
 }
