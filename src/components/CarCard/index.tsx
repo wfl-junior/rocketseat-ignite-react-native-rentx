@@ -15,7 +15,7 @@ import {
   Rent,
 } from "./styles";
 
-interface CarCardProps {
+export interface CarCardProps {
   brand: string;
   model: string;
   rent: {
