@@ -51,5 +51,5 @@ export const Price = styled.Text`
 `;
 
 export const CarImage = styled.Image`
-  max-width: 100%;
+  max-width: ${RFValue(170)}px;
 `;
