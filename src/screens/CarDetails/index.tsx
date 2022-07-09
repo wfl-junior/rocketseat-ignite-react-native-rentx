@@ -1,8 +1,16 @@
+import AccelerationIcon from "../../assets/acceleration.svg";
 import LamborghiniHuracanImage from "../../assets/cars/lamborghini-huracan.png";
+import ExchangeIcon from "../../assets/exchange.svg";
+import ForceIcon from "../../assets/force.svg";
+import GasolineIcon from "../../assets/gasoline.svg";
+import PeopleIcon from "../../assets/people.svg";
+import SpeedIcon from "../../assets/speed.svg";
+import { Acessory } from "../../components/Acessory";
 import { BackButton } from "../../components/BackButton";
 import { ImageSlider } from "../../components/ImageSlider";
 import {
   About,
+  Acessories,
   Brand,
   CarImages,
   Container,
@@ -38,6 +46,15 @@ export const CarDetails: React.FC = () => (
           <Price>R$ 580,00</Price>
         </Rent>
       </Details>
+
+      <Acessories>
+        <Acessory icon={SpeedIcon} name="380 km/h" />
+        <Acessory icon={AccelerationIcon} name="3.2s" />
+        <Acessory icon={ForceIcon} name="800 HP" />
+        <Acessory icon={GasolineIcon} name="Gasolina" />
+        <Acessory icon={ExchangeIcon} name="Auto" />
+        <Acessory icon={PeopleIcon} name="2 pessoas" />
+      </Acessories>
 
       <About>
         Este é automóvel desportivo. Surgiu do lendário touro de lide indultado
