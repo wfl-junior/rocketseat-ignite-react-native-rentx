@@ -23,7 +23,7 @@ export const HeaderContent = styled.View`
 `;
 
 export const TotalCars = styled.Text`
+  color: ${({ theme }) => theme.colors.text.DEFAULT};
   font-size: ${RFValue(15)}px;
   font-family: ${({ theme }) => theme.fonts.primary[400]};
-  color: ${({ theme }) => theme.colors.text.DEFAULT};
 `;
