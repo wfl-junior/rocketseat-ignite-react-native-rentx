@@ -1,7 +1,7 @@
-import { ImageSourcePropType } from "react-native";
 import { RectButtonProps } from "react-native-gesture-handler";
 import { RFValue } from "react-native-responsive-fontsize";
-import { SvgProps } from "react-native-svg";
+import GasolineIcon from "../../assets/gasoline.svg";
+import { CarDTO } from "../../dtos/CarDTO";
 import { theme } from "../../styles/theme";
 import { formatPrice } from "../../utils/formatPrice";
 import {
@@ -16,40 +16,23 @@ import {
   Rent,
 } from "./styles";
 
-export interface Car {
-  id: string;
-  brand: string;
-  model: string;
-  rent: {
-    period: string;
-    price: number;
-  };
-  typeIcon: React.FC<SvgProps>;
-  image: ImageSourcePropType;
+interface CarCardProps extends RectButtonProps {
+  data: CarDTO;
 }
 
-type CarCardProps = Car & RectButtonProps;
-
-export const CarCard: React.FC<CarCardProps> = ({
-  brand,
-  model,
-  rent,
-  typeIcon: TypeIcon,
-  image,
-  ...props
-}) => (
+export const CarCard: React.FC<CarCardProps> = ({ data, ...props }) => (
   <Container {...props}>
     <Details>
-      <Brand>{brand}</Brand>
-      <Model>{model}</Model>
+      <Brand>{data.brand}</Brand>
+      <Model>{data.model}</Model>
 
       <About>
         <Rent>
-          <Period>{rent.period}</Period>
-          <Price>{formatPrice(rent.price)}</Price>
+          <Period>{data.rent.period}</Period>
+          <Price>{formatPrice(data.rent.price)}</Price>
         </Rent>
 
-        <TypeIcon
+        <GasolineIcon
           width={RFValue(20)}
           height={RFValue(20)}
           stroke={theme.colors.text.detail}
@@ -57,6 +40,6 @@ export const CarCard: React.FC<CarCardProps> = ({
       </About>
     </Details>
 
-    <CarImage source={image} resizeMode="contain" />
+    <CarImage source={{ uri: data.thumbnail }} resizeMode="contain" />
   </Container>
 );

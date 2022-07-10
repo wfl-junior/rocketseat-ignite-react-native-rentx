@@ -1,4 +1,4 @@
-import { ImageSourcePropType } from "react-native";
+import { CarDTO } from "../../dtos/CarDTO";
 import {
   CarImage,
   CarImageWrapper,
@@ -8,10 +8,10 @@ import {
 } from "./styles";
 
 interface ImageSliderProps {
-  images: ImageSourcePropType[];
+  photos: CarDTO["photos"];
 }
 
-export const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => (
+export const ImageSlider: React.FC<ImageSliderProps> = ({ photos }) => (
   <Container>
     <ImageIndexes>
       <ImageIndex active />
@@ -21,7 +21,7 @@ export const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => (
     </ImageIndexes>
 
     <CarImageWrapper>
-      <CarImage source={images[0]} resizeMode="contain" />
+      <CarImage source={{ uri: photos[0] }} resizeMode="contain" />
     </CarImageWrapper>
   </Container>
 );
