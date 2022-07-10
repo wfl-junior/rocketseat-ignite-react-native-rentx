@@ -3,6 +3,7 @@ import { StatusBar } from "react-native";
 import ArrowIcon from "../../assets/arrow.svg";
 import { BackButton } from "../../components/BackButton";
 import { Button } from "../../components/Button";
+import { Calendar } from "../../components/Calendar";
 import { theme } from "../../styles/theme";
 import {
   Container,
@@ -49,7 +50,9 @@ export const Scheduling: React.FC = () => (
         </RentalPeriod>
       </Header>
 
-      <Content showsVerticalScrollIndicator={false}></Content>
+      <Content showsVerticalScrollIndicator={false}>
+        <Calendar />
+      </Content>
 
       <Footer>
         <Button title="Confirmar" />
