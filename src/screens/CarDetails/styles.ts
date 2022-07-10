@@ -25,6 +25,7 @@ export const Content = styled(ScrollView).attrs({
   contentContainerStyle: { alignItems: "center" },
 })`
   margin-top: ${RFValue(36)}px;
+  margin-bottom: ${RFValue(16)}px;
 `;
 
 export const Details = styled.View`
@@ -82,4 +83,10 @@ export const About = styled.Text`
   padding: 0 ${RFValue(24)}px;
   margin-top: ${RFValue(24)}px;
   line-height: ${RFValue(25)}px;
+`;
+
+export const Footer = styled.View`
+  width: 100%;
+  background-color: ${({ theme }) => theme.colors.background.primary};
+  padding: ${RFValue(24)}px;
 `;

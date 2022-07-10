@@ -7,6 +7,7 @@ import PeopleIcon from "../../assets/people.svg";
 import SpeedIcon from "../../assets/speed.svg";
 import { Acessory } from "../../components/Acessory";
 import { BackButton } from "../../components/BackButton";
+import { Button } from "../../components/Button";
 import { ImageSlider } from "../../components/ImageSlider";
 import {
   About,
@@ -17,6 +18,7 @@ import {
   Content,
   Description,
   Details,
+  Footer,
   Header,
   Model,
   Period,
@@ -62,5 +64,9 @@ export const CarDetails: React.FC = () => (
         gosta de acelerar.
       </About>
     </Content>
+
+    <Footer>
+      <Button title="Escolher período do aluguel" />
+    </Footer>
   </Container>
 );
