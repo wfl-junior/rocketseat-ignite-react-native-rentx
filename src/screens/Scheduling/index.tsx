@@ -1,0 +1,59 @@
+import { Fragment } from "react";
+import { StatusBar } from "react-native";
+import ArrowIcon from "../../assets/arrow.svg";
+import { BackButton } from "../../components/BackButton";
+import { Button } from "../../components/Button";
+import { theme } from "../../styles/theme";
+import {
+  Container,
+  Content,
+  DateInfo,
+  DateTitle,
+  DateValue,
+  Footer,
+  Header,
+  RentalPeriod,
+  Title,
+} from "./styles";
+
+export const Scheduling: React.FC = () => (
+  <Fragment>
+    <StatusBar
+      barStyle="light-content"
+      backgroundColor="transparent"
+      translucent
+    />
+
+    <Container>
+      <Header>
+        <BackButton color={theme.colors.background.secondary} />
+
+        <Title>
+          Escolha uma {"\n"}
+          data de início e {"\n"}
+          fim do aluguel
+        </Title>
+
+        <RentalPeriod>
+          <DateInfo>
+            <DateTitle>De</DateTitle>
+            <DateValue selected>18/06/2021</DateValue>
+          </DateInfo>
+
+          <ArrowIcon />
+
+          <DateInfo>
+            <DateTitle>Até</DateTitle>
+            <DateValue></DateValue>
+          </DateInfo>
+        </RentalPeriod>
+      </Header>
+
+      <Content showsVerticalScrollIndicator={false}></Content>
+
+      <Footer>
+        <Button title="Confirmar" />
+      </Footer>
+    </Container>
+  </Fragment>
+);

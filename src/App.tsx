@@ -12,7 +12,7 @@ import { hideAsync, preventAutoHideAsync } from "expo-splash-screen";
 import React, { useCallback, useEffect, useState } from "react";
 import { View } from "react-native";
 import { ThemeProvider } from "styled-components/native";
-import { CarDetails } from "./screens/CarDetails";
+import { Scheduling } from "./screens/Scheduling";
 import { theme } from "./styles/theme";
 
 export const App: React.FC = () => {
@@ -61,7 +61,7 @@ export const App: React.FC = () => {
   return (
     <View style={{ flex: 1 }} onLayout={handleLayoutRootView}>
       <ThemeProvider theme={theme}>
-        <CarDetails />
+        <Scheduling />
       </ThemeProvider>
     </View>
   );

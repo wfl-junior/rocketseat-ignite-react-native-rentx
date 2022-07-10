@@ -3,7 +3,7 @@ export const theme = {
     header: "#1b1b1f",
     background: {
       primary: "#f4f5f6",
-      secondary: "#fff",
+      secondary: "white",
     },
     text: {
       DEFAULT: "#7a7a80",

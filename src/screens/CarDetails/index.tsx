@@ -1,3 +1,5 @@
+import { Fragment } from "react";
+import { StatusBar } from "react-native";
 import AccelerationIcon from "../../assets/acceleration.svg";
 import LamborghiniHuracanImage from "../../assets/cars/lamborghini-huracan.png";
 import ExchangeIcon from "../../assets/exchange.svg";
@@ -27,46 +29,54 @@ import {
 } from "./styles";
 
 export const CarDetails: React.FC = () => (
-  <Container>
-    <Header>
-      <BackButton onPress={() => {}} />
-    </Header>
+  <Fragment>
+    <StatusBar
+      barStyle="dark-content"
+      backgroundColor="transparent"
+      translucent
+    />
 
-    <CarImages>
-      <ImageSlider images={[LamborghiniHuracanImage]} />
-    </CarImages>
+    <Container>
+      <Header>
+        <BackButton />
+      </Header>
 
-    <Content showsVerticalScrollIndicator={false}>
-      <Details>
-        <Description>
-          <Brand>Lamborghini</Brand>
-          <Model>Huracán</Model>
-        </Description>
+      <CarImages>
+        <ImageSlider images={[LamborghiniHuracanImage]} />
+      </CarImages>
 
-        <Rent>
-          <Period>Ao dia</Period>
-          <Price>R$ 580,00</Price>
-        </Rent>
-      </Details>
+      <Content showsVerticalScrollIndicator={false}>
+        <Details>
+          <Description>
+            <Brand>Lamborghini</Brand>
+            <Model>Huracán</Model>
+          </Description>
 
-      <Acessories>
-        <Acessory icon={SpeedIcon} name="380 km/h" />
-        <Acessory icon={AccelerationIcon} name="3.2s" />
-        <Acessory icon={ForceIcon} name="800 HP" />
-        <Acessory icon={GasolineIcon} name="Gasolina" />
-        <Acessory icon={ExchangeIcon} name="Auto" />
-        <Acessory icon={PeopleIcon} name="2 pessoas" />
-      </Acessories>
+          <Rent>
+            <Period>Ao dia</Period>
+            <Price>R$ 580,00</Price>
+          </Rent>
+        </Details>
 
-      <About>
-        Este é automóvel desportivo. Surgiu do lendário touro de lide indultado
-        na praça Real Maestranza de Sevilla. É um belíssimo carro para quem
-        gosta de acelerar.
-      </About>
-    </Content>
+        <Acessories>
+          <Acessory icon={SpeedIcon} name="380 km/h" />
+          <Acessory icon={AccelerationIcon} name="3.2s" />
+          <Acessory icon={ForceIcon} name="800 HP" />
+          <Acessory icon={GasolineIcon} name="Gasolina" />
+          <Acessory icon={ExchangeIcon} name="Auto" />
+          <Acessory icon={PeopleIcon} name="2 pessoas" />
+        </Acessories>
 
-    <Footer>
-      <Button title="Escolher período do aluguel" />
-    </Footer>
-  </Container>
+        <About>
+          Este é automóvel desportivo. Surgiu do lendário touro de lide
+          indultado na praça Real Maestranza de Sevilla. É um belíssimo carro
+          para quem gosta de acelerar.
+        </About>
+      </Content>
+
+      <Footer>
+        <Button title="Escolher período do aluguel" />
+      </Footer>
+    </Container>
+  </Fragment>
 );
