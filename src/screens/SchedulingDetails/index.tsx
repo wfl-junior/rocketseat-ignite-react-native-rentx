@@ -13,6 +13,7 @@ import { Acessory } from "../../components/Acessory";
 import { BackButton } from "../../components/BackButton";
 import { Button } from "../../components/Button";
 import { ImageSlider } from "../../components/ImageSlider";
+import { useStackNavigation } from "../../hooks/useStackNavigation";
 import { theme } from "../../styles/theme";
 import {
   Acessories,
@@ -40,84 +41,96 @@ import {
   RentalPriceTotal,
 } from "./styles";
 
-export const SchedulingDetails: React.FC = () => (
-  <Fragment>
-    <StatusBar
-      barStyle="dark-content"
-      backgroundColor="transparent"
-      translucent
-    />
+export const SchedulingDetails: React.FC = () => {
+  const { navigate } = useStackNavigation();
 
-    <Container>
-      <Header>
-        <BackButton />
-      </Header>
+  function handleRentNow() {
+    navigate("SchedulingCompleted");
+  }
 
-      <CarImages>
-        <ImageSlider images={[LamborghiniHuracanImage]} />
-      </CarImages>
+  return (
+    <Fragment>
+      <StatusBar
+        barStyle="dark-content"
+        backgroundColor="transparent"
+        translucent
+      />
 
-      <Content showsVerticalScrollIndicator={false}>
-        <Details>
-          <Description>
-            <Brand>Lamborghini</Brand>
-            <Model>Huracán</Model>
-          </Description>
+      <Container>
+        <Header>
+          <BackButton />
+        </Header>
 
-          <Rent>
-            <Period>Ao dia</Period>
-            <Price>R$ 580,00</Price>
-          </Rent>
-        </Details>
+        <CarImages>
+          <ImageSlider images={[LamborghiniHuracanImage]} />
+        </CarImages>
 
-        <Acessories>
-          <Acessory icon={SpeedIcon} name="380 km/h" />
-          <Acessory icon={AccelerationIcon} name="3.2s" />
-          <Acessory icon={ForceIcon} name="800 HP" />
-          <Acessory icon={GasolineIcon} name="Gasolina" />
-          <Acessory icon={ExchangeIcon} name="Auto" />
-          <Acessory icon={PeopleIcon} name="2 pessoas" />
-        </Acessories>
+        <Content showsVerticalScrollIndicator={false}>
+          <Details>
+            <Description>
+              <Brand>Lamborghini</Brand>
+              <Model>Huracán</Model>
+            </Description>
 
-        <RentalPeriod>
-          <CalendarIcon>
+            <Rent>
+              <Period>Ao dia</Period>
+              <Price>R$ 580,00</Price>
+            </Rent>
+          </Details>
+
+          <Acessories>
+            <Acessory icon={SpeedIcon} name="380 km/h" />
+            <Acessory icon={AccelerationIcon} name="3.2s" />
+            <Acessory icon={ForceIcon} name="800 HP" />
+            <Acessory icon={GasolineIcon} name="Gasolina" />
+            <Acessory icon={ExchangeIcon} name="Auto" />
+            <Acessory icon={PeopleIcon} name="2 pessoas" />
+          </Acessories>
+
+          <RentalPeriod>
+            <CalendarIcon>
+              <Feather
+                name="calendar"
+                size={RFValue(24)}
+                color={theme.colors.background.secondary}
+              />
+            </CalendarIcon>
+
+            <DateInfo>
+              <DateTitle>De</DateTitle>
+              <DateValue>18/06/2021</DateValue>
+            </DateInfo>
+
             <Feather
-              name="calendar"
-              size={RFValue(24)}
-              color={theme.colors.background.secondary}
+              name="chevron-right"
+              size={RFValue(15)}
+              color={theme.colors.text.detail}
             />
-          </CalendarIcon>
 
-          <DateInfo>
-            <DateTitle>De</DateTitle>
-            <DateValue>18/06/2021</DateValue>
-          </DateInfo>
+            <DateInfo>
+              <DateTitle>Até</DateTitle>
+              <DateValue>20/06/2021</DateValue>
+            </DateInfo>
+          </RentalPeriod>
 
-          <Feather
-            name="chevron-right"
-            size={RFValue(15)}
-            color={theme.colors.text.detail}
+          <RentalPrice>
+            <RentalPriceLabel>Total</RentalPriceLabel>
+
+            <RentalPriceDetails>
+              <RentalPriceQuota>R$ 580,00 x3 diárias</RentalPriceQuota>
+              <RentalPriceTotal>R$ 1740,00</RentalPriceTotal>
+            </RentalPriceDetails>
+          </RentalPrice>
+        </Content>
+
+        <Footer>
+          <Button
+            title="Alugar agora"
+            color={theme.colors.success}
+            onPress={handleRentNow}
           />
-
-          <DateInfo>
-            <DateTitle>Até</DateTitle>
-            <DateValue>20/06/2021</DateValue>
-          </DateInfo>
-        </RentalPeriod>
-
-        <RentalPrice>
-          <RentalPriceLabel>Total</RentalPriceLabel>
-
-          <RentalPriceDetails>
-            <RentalPriceQuota>R$ 580,00 x3 diárias</RentalPriceQuota>
-            <RentalPriceTotal>R$ 1740,00</RentalPriceTotal>
-          </RentalPriceDetails>
-        </RentalPrice>
-      </Content>
-
-      <Footer>
-        <Button title="Alugar agora" color={theme.colors.success} />
-      </Footer>
-    </Container>
-  </Fragment>
-);
+        </Footer>
+      </Container>
+    </Fragment>
+  );
+};

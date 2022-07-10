@@ -11,6 +11,7 @@ import { Acessory } from "../../components/Acessory";
 import { BackButton } from "../../components/BackButton";
 import { Button } from "../../components/Button";
 import { ImageSlider } from "../../components/ImageSlider";
+import { useStackNavigation } from "../../hooks/useStackNavigation";
 import {
   About,
   Acessories,
@@ -28,55 +29,66 @@ import {
   Rent,
 } from "./styles";
 
-export const CarDetails: React.FC = () => (
-  <Fragment>
-    <StatusBar
-      barStyle="dark-content"
-      backgroundColor="transparent"
-      translucent
-    />
+export const CarDetails: React.FC = () => {
+  const { navigate } = useStackNavigation();
 
-    <Container>
-      <Header>
-        <BackButton />
-      </Header>
+  function handleChooseRentalPeriod() {
+    navigate("Scheduling");
+  }
 
-      <CarImages>
-        <ImageSlider images={[LamborghiniHuracanImage]} />
-      </CarImages>
+  return (
+    <Fragment>
+      <StatusBar
+        barStyle="dark-content"
+        backgroundColor="transparent"
+        translucent
+      />
 
-      <Content showsVerticalScrollIndicator={false}>
-        <Details>
-          <Description>
-            <Brand>Lamborghini</Brand>
-            <Model>Huracán</Model>
-          </Description>
+      <Container>
+        <Header>
+          <BackButton />
+        </Header>
 
-          <Rent>
-            <Period>Ao dia</Period>
-            <Price>R$ 580,00</Price>
-          </Rent>
-        </Details>
+        <CarImages>
+          <ImageSlider images={[LamborghiniHuracanImage]} />
+        </CarImages>
 
-        <Acessories>
-          <Acessory icon={SpeedIcon} name="380 km/h" />
-          <Acessory icon={AccelerationIcon} name="3.2s" />
-          <Acessory icon={ForceIcon} name="800 HP" />
-          <Acessory icon={GasolineIcon} name="Gasolina" />
-          <Acessory icon={ExchangeIcon} name="Auto" />
-          <Acessory icon={PeopleIcon} name="2 pessoas" />
-        </Acessories>
+        <Content showsVerticalScrollIndicator={false}>
+          <Details>
+            <Description>
+              <Brand>Lamborghini</Brand>
+              <Model>Huracán</Model>
+            </Description>
 
-        <About>
-          Este é automóvel desportivo. Surgiu do lendário touro de lide
-          indultado na praça Real Maestranza de Sevilla. É um belíssimo carro
-          para quem gosta de acelerar.
-        </About>
-      </Content>
+            <Rent>
+              <Period>Ao dia</Period>
+              <Price>R$ 580,00</Price>
+            </Rent>
+          </Details>
 
-      <Footer>
-        <Button title="Escolher período do aluguel" />
-      </Footer>
-    </Container>
-  </Fragment>
-);
+          <Acessories>
+            <Acessory icon={SpeedIcon} name="380 km/h" />
+            <Acessory icon={AccelerationIcon} name="3.2s" />
+            <Acessory icon={ForceIcon} name="800 HP" />
+            <Acessory icon={GasolineIcon} name="Gasolina" />
+            <Acessory icon={ExchangeIcon} name="Auto" />
+            <Acessory icon={PeopleIcon} name="2 pessoas" />
+          </Acessories>
+
+          <About>
+            Este é automóvel desportivo. Surgiu do lendário touro de lide
+            indultado na praça Real Maestranza de Sevilla. É um belíssimo carro
+            para quem gosta de acelerar.
+          </About>
+        </Content>
+
+        <Footer>
+          <Button
+            title="Escolher período do aluguel"
+            onPress={handleChooseRentalPeriod}
+          />
+        </Footer>
+      </Container>
+    </Fragment>
+  );
+};

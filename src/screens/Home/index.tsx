@@ -10,12 +10,9 @@ import EnergyIcon from "../../assets/energy.svg";
 import GasolineIcon from "../../assets/gasoline.svg";
 import HybridIcon from "../../assets/hybrid.svg";
 import Logo from "../../assets/logo.svg";
-import { CarCard, CarCardProps } from "../../components/CarCard";
+import { Car, CarCard } from "../../components/CarCard";
+import { useStackNavigation } from "../../hooks/useStackNavigation";
 import { Container, Header, HeaderContent, TotalCars } from "./styles";
-
-export interface Car extends CarCardProps {
-  id: string;
-}
 
 const cars: Car[] = [
   {
@@ -75,32 +72,42 @@ const cars: Car[] = [
   },
 ];
 
-export const Home: React.FC = () => (
-  <Fragment>
-    <StatusBar
-      barStyle="light-content"
-      backgroundColor="transparent"
-      translucent
-    />
+export const Home: React.FC = () => {
+  const { navigate } = useStackNavigation();
 
-    <Container>
-      <Header>
-        <HeaderContent>
-          <Logo width={RFValue(108)} height={RFValue(12)} />
-          <TotalCars>Total de 12 carros</TotalCars>
-        </HeaderContent>
-      </Header>
+  function handleCarCardPress() {
+    navigate("CarDetails");
+  }
 
-      <FlatList
-        data={cars}
-        keyExtractor={car => car.id}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          paddingTop: RFValue(16),
-          paddingHorizontal: RFValue(16),
-        }}
-        renderItem={({ item: car }) => <CarCard {...car} />}
+  return (
+    <Fragment>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent
       />
-    </Container>
-  </Fragment>
-);
+
+      <Container>
+        <Header>
+          <HeaderContent>
+            <Logo width={RFValue(108)} height={RFValue(12)} />
+            <TotalCars>Total de {cars.length} carros</TotalCars>
+          </HeaderContent>
+        </Header>
+
+        <FlatList
+          data={cars}
+          keyExtractor={car => car.id}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            paddingTop: RFValue(16),
+            paddingHorizontal: RFValue(16),
+          }}
+          renderItem={({ item: car }) => (
+            <CarCard onPress={handleCarCardPress} {...car} />
+          )}
+        />
+      </Container>
+    </Fragment>
+  );
+};

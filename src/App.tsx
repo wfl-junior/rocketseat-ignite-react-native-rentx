@@ -10,9 +10,9 @@ import { Inter_400Regular, Inter_500Medium } from "@expo-google-fonts/inter";
 import { loadAsync } from "expo-font";
 import { hideAsync, preventAutoHideAsync } from "expo-splash-screen";
 import React, { useCallback, useEffect, useState } from "react";
-import { View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { ThemeProvider } from "styled-components/native";
-import { SchedulingCompleted } from "./screens/SchedulingCompleted";
+import { Routes } from "./routes";
 import { theme } from "./styles/theme";
 
 export const App: React.FC = () => {
@@ -59,10 +59,10 @@ export const App: React.FC = () => {
   }
 
   return (
-    <View style={{ flex: 1 }} onLayout={handleLayoutRootView}>
+    <GestureHandlerRootView style={{ flex: 1 }} onLayout={handleLayoutRootView}>
       <ThemeProvider theme={theme}>
-        <SchedulingCompleted />
+        <Routes />
       </ThemeProvider>
-    </View>
+    </GestureHandlerRootView>
   );
 };

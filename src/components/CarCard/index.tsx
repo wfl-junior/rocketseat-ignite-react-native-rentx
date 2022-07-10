@@ -1,4 +1,5 @@
 import { ImageSourcePropType } from "react-native";
+import { RectButtonProps } from "react-native-gesture-handler";
 import { RFValue } from "react-native-responsive-fontsize";
 import { SvgProps } from "react-native-svg";
 import { theme } from "../../styles/theme";
@@ -15,7 +16,8 @@ import {
   Rent,
 } from "./styles";
 
-export interface CarCardProps {
+export interface Car {
+  id: string;
   brand: string;
   model: string;
   rent: {
@@ -26,14 +28,17 @@ export interface CarCardProps {
   image: ImageSourcePropType;
 }
 
+type CarCardProps = Car & RectButtonProps;
+
 export const CarCard: React.FC<CarCardProps> = ({
   brand,
   model,
   rent,
   typeIcon: TypeIcon,
   image,
+  ...props
 }) => (
-  <Container>
+  <Container {...props}>
     <Details>
       <Brand>{brand}</Brand>
       <Model>{model}</Model>
