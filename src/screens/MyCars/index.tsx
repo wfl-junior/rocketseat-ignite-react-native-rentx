@@ -1,5 +1,7 @@
+import { AntDesign } from "@expo/vector-icons";
 import { Fragment, useEffect, useState } from "react";
 import { Alert, FlatList, StatusBar } from "react-native";
+import { RFValue } from "react-native-responsive-fontsize";
 import { BackButton } from "../../components/BackButton";
 import { CarCard } from "../../components/CarCard";
 import { Loading } from "../../components/Loading";
@@ -10,6 +12,11 @@ import {
   Appointments,
   AppointmentsQuantity,
   AppointmentsTitle,
+  CarFooter,
+  CarFooterDate,
+  CarFooterPeriod,
+  CarFooterTitle,
+  CarWrapper,
   Container,
   Content,
   Header,
@@ -52,27 +59,44 @@ export const MyCars: React.FC = () => {
           <SubTitle>Conforto, segurança e praticidade.</SubTitle>
         </Header>
 
-        <Content>
-          {isLoading ? (
-            <Loading />
-          ) : (
-            <Fragment>
-              <Appointments>
-                <AppointmentsTitle>Agendamentos feitos</AppointmentsTitle>
-                <AppointmentsQuantity>{schedules.length}</AppointmentsQuantity>
-              </Appointments>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <Content>
+            <Appointments>
+              <AppointmentsTitle>Agendamentos feitos</AppointmentsTitle>
+              <AppointmentsQuantity>{schedules.length}</AppointmentsQuantity>
+            </Appointments>
 
-              <FlatList
-                data={schedules}
-                keyExtractor={schedule => schedule.id.toString()}
-                showsVerticalScrollIndicator={false}
-                renderItem={({ item: schedule }) => (
+            <FlatList
+              data={schedules}
+              keyExtractor={schedule => schedule.id.toString()}
+              showsVerticalScrollIndicator={false}
+              renderItem={({ item: schedule }) => (
+                <CarWrapper>
                   <CarCard car={schedule.car} />
-                )}
-              />
-            </Fragment>
-          )}
-        </Content>
+
+                  <CarFooter>
+                    <CarFooterTitle>Período</CarFooterTitle>
+
+                    <CarFooterPeriod>
+                      <CarFooterDate>{schedule.startDate}</CarFooterDate>
+
+                      <AntDesign
+                        name="arrowright"
+                        size={RFValue(20)}
+                        color={theme.colors.text.detail}
+                        style={{ marginHorizontal: RFValue(10) }}
+                      />
+
+                      <CarFooterDate>{schedule.endDate}</CarFooterDate>
+                    </CarFooterPeriod>
+                  </CarFooter>
+                </CarWrapper>
+              )}
+            />
+          </Content>
+        )}
       </Container>
     </Fragment>
   );
