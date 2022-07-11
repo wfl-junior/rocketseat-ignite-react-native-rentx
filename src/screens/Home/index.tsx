@@ -22,8 +22,8 @@ export const Home: React.FC = () => {
       .finally(() => setIsLoading(false));
   }, []);
 
-  function handleCarCardPress() {
-    navigate("CarDetails");
+  function handleCarDetails(car: CarDTO) {
+    navigate("CarDetails", { car });
   }
 
   return (
@@ -54,7 +54,7 @@ export const Home: React.FC = () => {
               paddingHorizontal: RFValue(16),
             }}
             renderItem={({ item: car }) => (
-              <CarCard onPress={handleCarCardPress} data={car} />
+              <CarCard onPress={() => handleCarDetails(car)} data={car} />
             )}
           />
         )}

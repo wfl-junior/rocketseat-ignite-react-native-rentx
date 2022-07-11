@@ -1,20 +1,17 @@
+import { RouteProp, useRoute } from "@react-navigation/native";
 import { Fragment } from "react";
 import { StatusBar } from "react-native";
-import AccelerationIcon from "../../assets/acceleration.svg";
-import LamborghiniHuracanImage from "../../assets/cars/lamborghini-huracan.png";
-import ExchangeIcon from "../../assets/exchange.svg";
-import ForceIcon from "../../assets/force.svg";
-import GasolineIcon from "../../assets/gasoline.svg";
-import PeopleIcon from "../../assets/people.svg";
 import SpeedIcon from "../../assets/speed.svg";
 import { Acessory } from "../../components/Acessory";
 import { BackButton } from "../../components/BackButton";
 import { Button } from "../../components/Button";
 import { ImageSlider } from "../../components/ImageSlider";
+import { CarDTO } from "../../dtos/CarDTO";
 import { useStackNavigation } from "../../hooks/useStackNavigation";
+import { formatPrice } from "../../utils/formatPrice";
 import {
   About,
-  Acessories,
+  Accessories,
   Brand,
   CarImages,
   Container,
@@ -31,6 +28,9 @@ import {
 
 export const CarDetails: React.FC = () => {
   const { navigate } = useStackNavigation();
+  const {
+    params: { car },
+  } = useRoute<RouteProp<{ params: { car: CarDTO } }>>();
 
   function handleChooseRentalPeriod() {
     navigate("Scheduling");
@@ -50,36 +50,33 @@ export const CarDetails: React.FC = () => {
         </Header>
 
         <CarImages>
-          <ImageSlider images={[LamborghiniHuracanImage]} />
+          <ImageSlider photos={car.photos} />
         </CarImages>
 
         <Content showsVerticalScrollIndicator={false}>
           <Details>
             <Description>
-              <Brand>Lamborghini</Brand>
-              <Model>Huracán</Model>
+              <Brand>{car.brand}</Brand>
+              <Model>{car.model}</Model>
             </Description>
 
             <Rent>
-              <Period>Ao dia</Period>
-              <Price>R$ 580,00</Price>
+              <Period>{car.rent.period}</Period>
+              <Price>{formatPrice(car.rent.price)}</Price>
             </Rent>
           </Details>
 
-          <Acessories>
-            <Acessory icon={SpeedIcon} name="380 km/h" />
-            <Acessory icon={AccelerationIcon} name="3.2s" />
-            <Acessory icon={ForceIcon} name="800 HP" />
-            <Acessory icon={GasolineIcon} name="Gasolina" />
-            <Acessory icon={ExchangeIcon} name="Auto" />
-            <Acessory icon={PeopleIcon} name="2 pessoas" />
-          </Acessories>
+          <Accessories>
+            {car.accessories.map(accessory => (
+              <Acessory
+                key={accessory.type}
+                icon={SpeedIcon}
+                name={accessory.name}
+              />
+            ))}
+          </Accessories>
 
-          <About>
-            Este é automóvel desportivo. Surgiu do lendário touro de lide
-            indultado na praça Real Maestranza de Sevilla. É um belíssimo carro
-            para quem gosta de acelerar.
-          </About>
+          <About>{car.about}</About>
         </Content>
 
         <Footer>

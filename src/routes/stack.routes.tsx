@@ -1,4 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
+import { CarDTO } from "../dtos/CarDTO";
 import { CarDetails } from "../screens/CarDetails";
 import { Home } from "../screens/Home";
 import { Scheduling } from "../screens/Scheduling";
@@ -7,7 +8,7 @@ import { SchedulingDetails } from "../screens/SchedulingDetails";
 
 export type StackNavigationParamList = {
   Home: undefined;
-  CarDetails: undefined;
+  CarDetails: { car: CarDTO };
   Scheduling: undefined;
   SchedulingDetails: undefined;
   SchedulingCompleted: undefined;

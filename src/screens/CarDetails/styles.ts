@@ -66,7 +66,7 @@ export const Price = styled.Text`
   font-family: ${({ theme }) => theme.fonts.secondary[500]};
 `;
 
-export const Acessories = styled.View`
+export const Accessories = styled.View`
   width: 100%;
   flex-direction: row;
   flex-wrap: wrap;

@@ -40,6 +40,6 @@ export const CarImageWrapper = styled.View`
 `;
 
 export const CarImage = styled.Image`
-  max-width: ${RFValue(280)}px;
+  width: ${RFValue(280)}px;
   height: 100%;
 `;
