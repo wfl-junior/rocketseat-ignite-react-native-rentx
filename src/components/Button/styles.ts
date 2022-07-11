@@ -4,6 +4,7 @@ import styled from "styled-components/native";
 
 interface ContainerProps {
   color?: string;
+  isLoading: boolean;
 }
 
 export const Container = styled(RectButton)<ContainerProps>`
@@ -12,7 +13,13 @@ export const Container = styled(RectButton)<ContainerProps>`
   align-items: center;
   justify-content: center;
   background-color: ${({ color, theme }) => color || theme.colors.main.DEFAULT};
-  opacity: ${({ enabled }) => (enabled ? 1 : 0.5)};
+  opacity: ${({ enabled, isLoading }) => {
+    if (isLoading || !enabled) {
+      return "0.5";
+    }
+
+    return "1";
+  }};
 `;
 
 export const Title = styled.Text`

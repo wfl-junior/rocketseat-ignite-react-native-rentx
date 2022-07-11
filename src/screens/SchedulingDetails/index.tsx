@@ -2,7 +2,7 @@ import { Feather } from "@expo/vector-icons";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { format } from "date-fns";
 import { Fragment, useMemo, useState } from "react";
-import { ActivityIndicator, Alert, StatusBar } from "react-native";
+import { Alert, StatusBar } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { Acessory } from "../../components/Acessory";
 import { BackButton } from "../../components/BackButton";
@@ -181,14 +181,9 @@ export const SchedulingDetails: React.FC = () => {
             title="Alugar agora"
             color={theme.colors.success}
             onPress={handleRentNow}
+            enabled={!isLoading}
+            isLoading={isLoading}
           />
-
-          {isLoading && (
-            <ActivityIndicator
-              color={theme.colors.main.DEFAULT}
-              size={RFValue(36)}
-            />
-          )}
         </Footer>
       </Container>
     </Fragment>
