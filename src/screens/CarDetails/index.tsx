@@ -1,6 +1,7 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
+import Constants from "expo-constants";
 import { Fragment } from "react";
-import { StatusBar } from "react-native";
+import { StatusBar, StyleSheet } from "react-native";
 import Animated, {
   Extrapolate,
   interpolate,
@@ -15,6 +16,7 @@ import { Button } from "../../components/Button";
 import { ImageSlider } from "../../components/ImageSlider";
 import { CarDTO } from "../../dtos/CarDTO";
 import { useStackNavigation } from "../../hooks/useStackNavigation";
+import { theme } from "../../styles/theme";
 import { formatPrice } from "../../utils/formatPrice";
 import { getAccessoryIcon } from "../../utils/getAccessoryIcon";
 import {
@@ -33,6 +35,15 @@ import {
   Rent,
 } from "./styles";
 
+const styles = StyleSheet.create({
+  header: {
+    position: "absolute",
+    overflow: "hidden",
+    zIndex: 1,
+    backgroundColor: theme.colors.background.secondary,
+  },
+});
+
 export const CarDetails: React.FC = () => {
   const { navigate } = useStackNavigation();
   const {
@@ -48,7 +59,16 @@ export const CarDetails: React.FC = () => {
     height: interpolate(
       contentScrollY.value,
       [0, 200],
-      [200, 70],
+      [Constants.statusBarHeight + 200, Constants.statusBarHeight + 50],
+      Extrapolate.CLAMP,
+    ),
+  }));
+
+  const carSliderStyleAnimation = useAnimatedStyle(() => ({
+    opacity: interpolate(
+      contentScrollY.value,
+      [0, 150],
+      [1, 0],
       Extrapolate.CLAMP,
     ),
   }));
@@ -66,20 +86,26 @@ export const CarDetails: React.FC = () => {
       />
 
       <Container>
-        <Animated.View style={[headerStyleAnimation]}>
+        <Animated.View style={[headerStyleAnimation, styles.header]}>
           <Header>
             <BackButton />
           </Header>
 
-          <CarImages>
-            <ImageSlider photos={car.photos} />
-          </CarImages>
+          <Animated.View style={carSliderStyleAnimation}>
+            <CarImages>
+              <ImageSlider photos={car.photos} />
+            </CarImages>
+          </Animated.View>
         </Animated.View>
 
         <Animated.ScrollView
           onScroll={handleContentScroll}
+          scrollEventThrottle={1000 / 60}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ alignItems: "center" }}
+          contentContainerStyle={{
+            alignItems: "center",
+            paddingTop: Constants.statusBarHeight + RFValue(180),
+          }}
           style={{
             marginTop: RFValue(36),
             marginBottom: RFValue(16),

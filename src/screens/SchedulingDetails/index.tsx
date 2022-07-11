@@ -1,8 +1,16 @@
 import { Feather } from "@expo/vector-icons";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { format } from "date-fns";
+import Constants from "expo-constants";
 import { Fragment, useMemo, useState } from "react";
-import { Alert, StatusBar } from "react-native";
+import { Alert, StatusBar, StyleSheet } from "react-native";
+import Animated, {
+  Extrapolate,
+  interpolate,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue,
+} from "react-native-reanimated";
 import { RFValue } from "react-native-responsive-fontsize";
 import { Acessory } from "../../components/Acessory";
 import { BackButton } from "../../components/BackButton";
@@ -21,7 +29,6 @@ import {
   CalendarIcon,
   CarImages,
   Container,
-  Content,
   DateInfo,
   DateTitle,
   DateValue,
@@ -40,6 +47,15 @@ import {
   RentalPriceQuota,
   RentalPriceTotal,
 } from "./styles";
+
+const styles = StyleSheet.create({
+  header: {
+    position: "absolute",
+    overflow: "hidden",
+    zIndex: 1,
+    backgroundColor: theme.colors.background.secondary,
+  },
+});
 
 export const SchedulingDetails: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -61,6 +77,29 @@ export const SchedulingDetails: React.FC = () => {
 
     return { startDateFormatted, endDateFormatted };
   }, [dates]);
+
+  const contentScrollY = useSharedValue(0);
+  const handleContentScroll = useAnimatedScrollHandler(event => {
+    contentScrollY.value = event.contentOffset.y;
+  });
+
+  const headerStyleAnimation = useAnimatedStyle(() => ({
+    height: interpolate(
+      contentScrollY.value,
+      [0, 200],
+      [Constants.statusBarHeight + 200, Constants.statusBarHeight + 50],
+      Extrapolate.CLAMP,
+    ),
+  }));
+
+  const carSliderStyleAnimation = useAnimatedStyle(() => ({
+    opacity: interpolate(
+      contentScrollY.value,
+      [0, 150],
+      [1, 0],
+      Extrapolate.CLAMP,
+    ),
+  }));
 
   async function handleRentNow() {
     setIsLoading(true);
@@ -103,15 +142,31 @@ export const SchedulingDetails: React.FC = () => {
       />
 
       <Container>
-        <Header>
-          <BackButton />
-        </Header>
+        <Animated.View style={[headerStyleAnimation, styles.header]}>
+          <Header>
+            <BackButton />
+          </Header>
 
-        <CarImages>
-          <ImageSlider photos={car.photos} />
-        </CarImages>
+          <Animated.View style={carSliderStyleAnimation}>
+            <CarImages>
+              <ImageSlider photos={car.photos} />
+            </CarImages>
+          </Animated.View>
+        </Animated.View>
 
-        <Content showsVerticalScrollIndicator={false}>
+        <Animated.ScrollView
+          onScroll={handleContentScroll}
+          scrollEventThrottle={1000 / 60}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            alignItems: "center",
+            paddingTop: Constants.statusBarHeight + RFValue(180),
+          }}
+          style={{
+            marginTop: RFValue(36),
+            marginBottom: RFValue(16),
+          }}
+        >
           <Details>
             <Description>
               <Brand>{car.brand}</Brand>
@@ -174,7 +229,7 @@ export const SchedulingDetails: React.FC = () => {
               </RentalPriceTotal>
             </RentalPriceDetails>
           </RentalPrice>
-        </Content>
+        </Animated.ScrollView>
 
         <Footer>
           <Button
