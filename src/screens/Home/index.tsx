@@ -54,7 +54,7 @@ export const Home: React.FC = () => {
               paddingHorizontal: RFValue(16),
             }}
             renderItem={({ item: car }) => (
-              <CarCard onPress={() => handleCarDetails(car)} data={car} />
+              <CarCard onPress={() => handleCarDetails(car)} car={car} />
             )}
           />
         )}

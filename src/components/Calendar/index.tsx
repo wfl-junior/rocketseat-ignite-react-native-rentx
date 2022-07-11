@@ -1,59 +1,30 @@
 import { Feather } from "@expo/vector-icons";
 import {
   Calendar as ReactNativeCalendar,
-  CalendarProps,
-  LocaleConfig,
+  DateData,
 } from "react-native-calendars";
 import { RFValue } from "react-native-responsive-fontsize";
 import { theme } from "../../styles/theme";
+import "./locale-config";
 
-LocaleConfig.locales["pt-br"] = {
-  monthNames: [
-    "Janeiro",
-    "Fevereiro",
-    "Março",
-    "Abril",
-    "Maio",
-    "Junho",
-    "Julho",
-    "Agosto",
-    "Setembro",
-    "Outubro",
-    "Novembro",
-    "Dezembro",
-  ],
-  monthNamesShort: [
-    "Jan",
-    "Fev",
-    "Mar",
-    "Abr",
-    "Mai",
-    "Jun",
-    "Jul",
-    "Ago",
-    "Set",
-    "Out",
-    "Nov",
-    "Dez",
-  ],
-  dayNames: [
-    "Domingo",
-    "Segunda",
-    "Terça",
-    "Quarta",
-    "Quinta",
-    "Sexta",
-    "Sábado",
-  ],
-  dayNamesShort: ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB"],
-  today: "Hoje",
-};
+export interface MarkedDateProps {
+  [date: string]: {
+    color: string;
+    textColor: string;
+    disabled?: boolean;
+    disableTouchEvent?: boolean;
+  };
+}
 
-LocaleConfig.defaultLocale = "pt-br";
+interface CalendarProps {
+  markedDates: MarkedDateProps;
+  onDayPress: (date: DateData) => void;
+}
 
 export const Calendar: React.FC<CalendarProps> = props => (
   <ReactNativeCalendar
     minDate={new Date().toISOString()}
+    markingType="period"
     renderArrow={direction => (
       <Feather
         size={RFValue(24)}

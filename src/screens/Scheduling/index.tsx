@@ -1,9 +1,11 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { StatusBar } from "react-native";
+import { DateData } from "react-native-calendars";
 import ArrowIcon from "../../assets/arrow.svg";
 import { BackButton } from "../../components/BackButton";
 import { Button } from "../../components/Button";
-import { Calendar } from "../../components/Calendar";
+import { Calendar, MarkedDateProps } from "../../components/Calendar";
+import { generateInterval } from "../../components/Calendar/generateInterval";
 import { useStackNavigation } from "../../hooks/useStackNavigation";
 import { theme } from "../../styles/theme";
 import {
@@ -20,6 +22,24 @@ import {
 
 export const Scheduling: React.FC = () => {
   const { navigate } = useStackNavigation();
+  const [markedDates, setMarkedDates] = useState<MarkedDateProps>({});
+  const [lastSelectedDate, setLastSelectedDate] = useState<DateData | null>(
+    null,
+  );
+
+  function handleChangeDate(date: DateData) {
+    let start = lastSelectedDate ?? date;
+    let end = date;
+
+    if (start.timestamp > end.timestamp) {
+      start = end;
+      end = start;
+    }
+
+    setLastSelectedDate(end);
+    const interval = generateInterval(start, end);
+    setMarkedDates(interval);
+  }
 
   function handleConfirm() {
     navigate("SchedulingDetails");
@@ -59,7 +79,7 @@ export const Scheduling: React.FC = () => {
         </Header>
 
         <Content showsVerticalScrollIndicator={false}>
-          <Calendar />
+          <Calendar markedDates={markedDates} onDayPress={handleChangeDate} />
         </Content>
 
         <Footer>

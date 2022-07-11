@@ -13,26 +13,26 @@ import {
   Model,
   Period,
   Price,
-  Rent,
+  Rent
 } from "./styles";
 
 interface CarCardProps extends RectButtonProps {
-  data: CarDTO;
+  car: CarDTO;
 }
 
-export const CarCard: React.FC<CarCardProps> = ({ data, ...props }) => {
-  const Icon = getAccessoryIcon(data.fuel_type);
+export const CarCard: React.FC<CarCardProps> = ({ car, ...props }) => {
+  const Icon = getAccessoryIcon(car.fuel_type);
 
   return (
     <Container {...props}>
       <Details>
-        <Brand>{data.brand}</Brand>
-        <Model>{data.model}</Model>
+        <Brand>{car.brand}</Brand>
+        <Model>{car.model}</Model>
 
         <About>
           <Rent>
-            <Period>{data.rent.period}</Period>
-            <Price>{formatPrice(data.rent.price)}</Price>
+            <Period>{car.rent.period}</Period>
+            <Price>{formatPrice(car.rent.price)}</Price>
           </Rent>
 
           <Icon
@@ -43,7 +43,7 @@ export const CarCard: React.FC<CarCardProps> = ({ data, ...props }) => {
         </About>
       </Details>
 
-      <CarImage source={{ uri: data.thumbnail }} resizeMode="contain" />
+      <CarImage source={{ uri: car.thumbnail }} resizeMode="contain" />
     </Container>
   );
 };
