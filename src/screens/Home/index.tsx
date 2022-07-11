@@ -1,6 +1,13 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Fragment, useEffect, useState } from "react";
-import { Alert, FlatList, StatusBar } from "react-native";
+import { Alert, FlatList, StatusBar, StyleSheet } from "react-native";
+import { PanGestureHandler, RectButton } from "react-native-gesture-handler";
+import Animated, {
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated";
 import { RFValue } from "react-native-responsive-fontsize";
 import Logo from "../../assets/logo.svg";
 import { CarCard } from "../../components/CarCard";
@@ -9,18 +16,58 @@ import { CarDTO } from "../../dtos/CarDTO";
 import { useStackNavigation } from "../../hooks/useStackNavigation";
 import { api } from "../../services/api";
 import { theme } from "../../styles/theme";
-import {
-  Container,
-  Header,
-  HeaderContent,
-  MyCarsButton,
-  TotalCars,
-} from "./styles";
+import { Container, Header, HeaderContent, TotalCars } from "./styles";
+
+const ButtonAnimated = Animated.createAnimatedComponent(RectButton);
+
+const styles = StyleSheet.create({
+  myCarsButtonContainer: {
+    position: "absolute",
+    bottom: RFValue(13),
+    right: RFValue(22),
+  },
+  myCarsButton: {
+    width: RFValue(60),
+    height: RFValue(60),
+    borderRadius: RFValue(30),
+    backgroundColor: theme.colors.main.DEFAULT,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
+
+type Position = {
+  positionX: number;
+  positionY: number;
+};
 
 export const Home: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [cars, setCars] = useState<CarDTO[]>([]);
   const { navigate } = useStackNavigation();
+  const myCarsButtonPositionX = useSharedValue(0);
+  const myCarsButtonPositionY = useSharedValue(0);
+  const myCarsButtonStyle = useAnimatedStyle(() => ({
+    transform: [
+      { translateX: myCarsButtonPositionX.value },
+      { translateY: myCarsButtonPositionY.value },
+    ],
+  }));
+
+  const handleGestureEvent = useAnimatedGestureHandler({
+    onStart(_event, _context: Position) {
+      _context.positionX = myCarsButtonPositionX.value;
+      _context.positionY = myCarsButtonPositionY.value;
+    },
+    onActive(event, context) {
+      myCarsButtonPositionX.value = context.positionX + event.translationX;
+      myCarsButtonPositionY.value = context.positionY + event.translationY;
+    },
+    onEnd() {
+      myCarsButtonPositionX.value = withSpring(0);
+      myCarsButtonPositionY.value = withSpring(0);
+    },
+  });
 
   useEffect(() => {
     api
@@ -74,13 +121,22 @@ export const Home: React.FC = () => {
           />
         )}
 
-        <MyCarsButton onPress={handleOpenMyCars}>
-          <Ionicons
-            name="ios-car-sport"
-            size={RFValue(32)}
-            color={theme.colors.background.secondary}
-          />
-        </MyCarsButton>
+        <PanGestureHandler onGestureEvent={handleGestureEvent}>
+          <Animated.View
+            style={[myCarsButtonStyle, styles.myCarsButtonContainer]}
+          >
+            <ButtonAnimated
+              onPress={handleOpenMyCars}
+              style={styles.myCarsButton}
+            >
+              <Ionicons
+                name="ios-car-sport"
+                size={RFValue(32)}
+                color={theme.colors.background.secondary}
+              />
+            </ButtonAnimated>
+          </Animated.View>
+        </PanGestureHandler>
       </Container>
     </Fragment>
   );
