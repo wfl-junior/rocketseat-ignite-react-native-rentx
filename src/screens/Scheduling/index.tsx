@@ -1,7 +1,7 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { format } from "date-fns";
 import { Fragment, useState } from "react";
-import { Alert, StatusBar } from "react-native";
+import { StatusBar } from "react-native";
 import { DateData } from "react-native-calendars";
 import ArrowIcon from "../../assets/arrow.svg";
 import { BackButton } from "../../components/BackButton";
@@ -67,9 +67,9 @@ export const Scheduling: React.FC = () => {
   }
 
   function handleConfirmRental() {
-    if (!rentalPeriod) {
-      return Alert.alert("Selecione o intervalo para alugar.");
-    }
+    // if (!rentalPeriod) {
+    //   return Alert.alert("Selecione o intervalo para alugar.");
+    // }
 
     navigate("SchedulingDetails", {
       car,
@@ -119,7 +119,11 @@ export const Scheduling: React.FC = () => {
         </Content>
 
         <Footer>
-          <Button title="Confirmar" onPress={handleConfirmRental} />
+          <Button
+            title="Confirmar"
+            onPress={handleConfirmRental}
+            enabled={!!rentalPeriod}
+          />
         </Footer>
       </Container>
     </Fragment>

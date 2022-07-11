@@ -6,8 +6,13 @@ interface ButtonProps extends RectButtonProps {
   color?: string;
 }
 
-export const Button: React.FC<ButtonProps> = ({ title, color, ...props }) => (
-  <Container color={color} {...props}>
+export const Button: React.FC<ButtonProps> = ({
+  title,
+  color,
+  enabled = true,
+  ...props
+}) => (
+  <Container color={color} enabled={enabled} {...props}>
     <Title>{title}</Title>
   </Container>
 );
