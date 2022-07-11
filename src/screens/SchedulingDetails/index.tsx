@@ -119,10 +119,7 @@ export const SchedulingDetails: React.FC = () => {
 
       await api.put(`/schedules_bycars/${car.id}`, {
         id: car.id,
-        unavailable_dates: {
-          ...response.data.unavailable_dates,
-          ...dates,
-        },
+        unavailable_dates: [...response.data.unavailable_dates, ...dates],
       });
 
       navigate("SchedulingCompleted");
