@@ -2,7 +2,7 @@ import { Feather } from "@expo/vector-icons";
 import { TextInputProps } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { theme } from "../../styles/theme";
-import { Container } from "./styles";
+import { Container, IconContainer, InputText } from "./styles";
 
 interface InputProps extends TextInputProps {
   iconName: React.ComponentProps<typeof Feather>["name"];
@@ -10,10 +10,14 @@ interface InputProps extends TextInputProps {
 
 export const Input: React.FC<InputProps> = ({ iconName, ...props }) => (
   <Container>
-    <Feather
-      name={iconName}
-      size={RFValue(24)}
-      color={theme.colors.text.DEFAULT}
-    />
+    <IconContainer>
+      <Feather
+        name={iconName}
+        size={RFValue(24)}
+        color={theme.colors.text.DEFAULT}
+      />
+    </IconContainer>
+
+    <InputText placeholderTextColor={theme.colors.text.detail} {...props} />
   </Container>
 );
