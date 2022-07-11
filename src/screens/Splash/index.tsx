@@ -3,6 +3,7 @@ import { StatusBar, StyleSheet } from "react-native";
 import Animated, {
   Extrapolate,
   interpolate,
+  runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
@@ -10,6 +11,7 @@ import Animated, {
 import { RFValue } from "react-native-responsive-fontsize";
 import Brand from "../../assets/brand.svg";
 import Logo from "../../assets/logo.svg";
+import { useStackNavigation } from "../../hooks/useStackNavigation";
 import { Container } from "./styles";
 
 const styles = StyleSheet.create({
@@ -19,6 +21,7 @@ const styles = StyleSheet.create({
 });
 
 export const Splash: React.FC = () => {
+  const { navigate } = useStackNavigation();
   const splashAnimation = useSharedValue(0);
   const brandStyle = useAnimatedStyle(() => ({
     opacity: interpolate(splashAnimation.value, [0, 50], [1, 0]),
@@ -48,8 +51,15 @@ export const Splash: React.FC = () => {
     ],
   }));
 
+  function startApp() {
+    navigate("Home");
+  }
+
   useEffect(() => {
-    splashAnimation.value = withTiming(50, { duration: 1000 });
+    splashAnimation.value = withTiming(50, { duration: 1500 }, () => {
+      "worklet";
+      runOnJS(startApp)();
+    });
   }, []);
 
   return (
