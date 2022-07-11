@@ -1,3 +1,4 @@
+import { Ionicons } from "@expo/vector-icons";
 import { Fragment, useEffect, useState } from "react";
 import { FlatList, StatusBar } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
@@ -7,7 +8,14 @@ import { Loading } from "../../components/Loading";
 import { CarDTO } from "../../dtos/CarDTO";
 import { useStackNavigation } from "../../hooks/useStackNavigation";
 import { api } from "../../services/api";
-import { Container, Header, HeaderContent, TotalCars } from "./styles";
+import { theme } from "../../styles/theme";
+import {
+  Container,
+  Header,
+  HeaderContent,
+  MyCarsButton,
+  TotalCars,
+} from "./styles";
 
 export const Home: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -24,6 +32,10 @@ export const Home: React.FC = () => {
 
   function handleCarDetails(car: CarDTO) {
     navigate("CarDetails", { car });
+  }
+
+  function handleOpenMyCars() {
+    navigate("MyCars");
   }
 
   return (
@@ -58,6 +70,14 @@ export const Home: React.FC = () => {
             )}
           />
         )}
+
+        <MyCarsButton onPress={handleOpenMyCars}>
+          <Ionicons
+            name="ios-car-sport"
+            size={RFValue(32)}
+            color={theme.colors.background.secondary}
+          />
+        </MyCarsButton>
       </Container>
     </Fragment>
   );
