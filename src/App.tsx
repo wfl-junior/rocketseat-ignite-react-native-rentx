@@ -13,7 +13,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { ThemeProvider } from "styled-components/native";
 import { Routes } from "./routes";
-import { Splash } from "./screens/Splash";
 import { theme } from "./styles/theme";
 
 export const App: React.FC = () => {
@@ -56,11 +55,7 @@ export const App: React.FC = () => {
   }, [appIsReady]);
 
   if (!appIsReady) {
-    return (
-      <ThemeProvider theme={theme}>
-        <Splash />
-      </ThemeProvider>
-    );
+    return null;
   }
 
   return (

@@ -4,6 +4,10 @@
     "slug": "rentx",
     "owner": "wfl-junior",
     "version": "0.1.0",
-    "assetBundlePatterns": ["**/*"]
+    "assetBundlePatterns": ["**/*"],
+    "splash": {
+      "image": "./assets/splash-screen.png",
+      "backgroundColor": "#1b1b1f"
+    }
   }
 }
