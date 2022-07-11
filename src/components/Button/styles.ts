@@ -22,8 +22,19 @@ export const Container = styled(RectButton)<ContainerProps>`
   }};
 `;
 
-export const Title = styled.Text`
-  color: ${({ theme }) => theme.colors.background.secondary};
+interface TitleProps {
+  textColor?: string;
+}
+
+export const Title = styled.Text<TitleProps>`
+  color: ${({ textColor, theme }) => {
+    if (textColor) {
+      return textColor;
+    }
+
+    return theme.colors.background.secondary;
+  }};
+
   font-size: ${RFValue(15)}px;
   font-family: ${({ theme }) => theme.fonts.primary[500]};
 `;

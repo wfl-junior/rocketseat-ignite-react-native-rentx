@@ -6,12 +6,14 @@ import { Container, Title } from "./styles";
 interface ButtonProps extends RectButtonProps {
   title: string;
   color?: string;
+  textColor?: string;
   isLoading?: boolean;
 }
 
 export const Button: React.FC<ButtonProps> = ({
   title,
   color,
+  textColor,
   enabled = true,
   isLoading = false,
   ...props
@@ -20,7 +22,7 @@ export const Button: React.FC<ButtonProps> = ({
     {isLoading ? (
       <ActivityIndicator color={theme.colors.background.secondary} />
     ) : (
-      <Title>{title}</Title>
+      <Title textColor={textColor}>{title}</Title>
     )}
   </Container>
 );
