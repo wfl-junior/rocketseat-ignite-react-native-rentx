@@ -6,8 +6,10 @@ import {
   useWindowDimensions,
 } from "react-native";
 import Animated, {
+  Easing,
   useAnimatedStyle,
   useSharedValue,
+  withTiming,
 } from "react-native-reanimated";
 import { Container } from "./styles";
 
@@ -22,9 +24,19 @@ const styles = StyleSheet.create({
 export const Splash: React.FC = () => {
   const { width } = useWindowDimensions();
   const boxAnimation = useSharedValue(0);
-  const boxAnimatedStyles = useAnimatedStyle(() => ({
-    transform: [{ translateX: boxAnimation.value }],
-  }));
+  const boxAnimatedStyles = useAnimatedStyle(
+    () => ({
+      transform: [
+        {
+          translateX: withTiming(boxAnimation.value, {
+            duration: 500,
+            easing: Easing.bezier(0.63, 0.13, 0, 1.01),
+          }),
+        },
+      ],
+    }),
+    [boxAnimation],
+  );
 
   function handleAnimationPosition() {
     boxAnimation.value = Math.random() * (width - 100);
