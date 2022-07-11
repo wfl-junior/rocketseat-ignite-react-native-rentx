@@ -8,9 +8,16 @@ import { SchedulingDetails } from "../screens/SchedulingDetails";
 
 export type StackNavigationParamList = {
   Home: undefined;
-  CarDetails: { car: CarDTO };
-  Scheduling: undefined;
-  SchedulingDetails: undefined;
+  CarDetails: {
+    car: CarDTO;
+  };
+  Scheduling: {
+    car: CarDTO;
+  };
+  SchedulingDetails: {
+    car: CarDTO;
+    dates: string[];
+  };
   SchedulingCompleted: undefined;
 };
 

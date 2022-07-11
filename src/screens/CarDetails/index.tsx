@@ -33,7 +33,7 @@ export const CarDetails: React.FC = () => {
   } = useRoute<RouteProp<{ params: { car: CarDTO } }>>();
 
   function handleChooseRentalPeriod() {
-    navigate("Scheduling");
+    navigate("Scheduling", { car });
   }
 
   return (

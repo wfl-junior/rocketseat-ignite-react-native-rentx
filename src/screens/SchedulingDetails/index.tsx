@@ -1,9 +1,9 @@
 import { Feather } from "@expo/vector-icons";
+import { RouteProp, useRoute } from "@react-navigation/native";
 import { Fragment } from "react";
 import { StatusBar } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import AccelerationIcon from "../../assets/acceleration.svg";
-import LamborghiniHuracanImage from "../../assets/cars/lamborghini-huracan.png";
 import ExchangeIcon from "../../assets/exchange.svg";
 import ForceIcon from "../../assets/force.svg";
 import GasolineIcon from "../../assets/gasoline.svg";
@@ -13,6 +13,7 @@ import { Acessory } from "../../components/Acessory";
 import { BackButton } from "../../components/BackButton";
 import { Button } from "../../components/Button";
 import { ImageSlider } from "../../components/ImageSlider";
+import { CarDTO } from "../../dtos/CarDTO";
 import { useStackNavigation } from "../../hooks/useStackNavigation";
 import { theme } from "../../styles/theme";
 import {
@@ -43,6 +44,9 @@ import {
 
 export const SchedulingDetails: React.FC = () => {
   const { navigate } = useStackNavigation();
+  const {
+    params: { car },
+  } = useRoute<RouteProp<{ params: { car: CarDTO } }>>();
 
   function handleRentNow() {
     navigate("SchedulingCompleted");
@@ -62,7 +66,7 @@ export const SchedulingDetails: React.FC = () => {
         </Header>
 
         <CarImages>
-          <ImageSlider images={[LamborghiniHuracanImage]} />
+          <ImageSlider photos={car.photos} />
         </CarImages>
 
         <Content showsVerticalScrollIndicator={false}>
