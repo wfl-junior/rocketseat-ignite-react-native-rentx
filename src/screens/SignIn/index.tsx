@@ -1,8 +1,10 @@
 import { Fragment } from "react";
 import { StatusBar } from "react-native";
+import { RFValue } from "react-native-responsive-fontsize";
 import { Button } from "../../components/Button";
+import { Input } from "../../components/Input";
 import { theme } from "../../styles/theme";
-import { Container, Footer, Header, SubTitle, Title } from "./styles";
+import { Container, Footer, Form, Header, SubTitle, Title } from "./styles";
 
 export const SignIn: React.FC = () => (
   <Fragment>
@@ -25,6 +27,10 @@ export const SignIn: React.FC = () => (
         </SubTitle>
       </Header>
 
+      <Form>
+        <Input iconName="mail" />
+      </Form>
+
       <Footer>
         <Button
           title="Login"
@@ -38,6 +44,7 @@ export const SignIn: React.FC = () => (
           onPress={() => {}}
           color={theme.colors.background.secondary}
           textColor={theme.colors.title}
+          style={{ marginTop: RFValue(8) }}
         />
       </Footer>
     </Container>
