@@ -1,46 +1,56 @@
-import { Fragment } from "react";
-import {
-  Button,
-  StatusBar,
-  StyleSheet,
-  useWindowDimensions,
-} from "react-native";
+import { Fragment, useEffect } from "react";
+import { StatusBar, StyleSheet } from "react-native";
 import Animated, {
-  Easing,
+  Extrapolate,
+  interpolate,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+import { RFValue } from "react-native-responsive-fontsize";
+import Brand from "../../assets/brand.svg";
+import Logo from "../../assets/logo.svg";
 import { Container } from "./styles";
 
 const styles = StyleSheet.create({
-  box: {
-    width: 100,
-    height: 100,
-    backgroundColor: "red",
+  logo: {
+    position: "absolute",
   },
 });
 
 export const Splash: React.FC = () => {
-  const { width } = useWindowDimensions();
-  const boxAnimation = useSharedValue(0);
-  const boxAnimatedStyles = useAnimatedStyle(
-    () => ({
-      transform: [
-        {
-          translateX: withTiming(boxAnimation.value, {
-            duration: 500,
-            easing: Easing.bezier(0.63, 0.13, 0, 1.01),
-          }),
-        },
-      ],
-    }),
-    [boxAnimation],
-  );
+  const splashAnimation = useSharedValue(0);
+  const brandStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(splashAnimation.value, [0, 50], [1, 0]),
+    transform: [
+      {
+        translateX: interpolate(
+          splashAnimation.value,
+          [0, 50],
+          [0, -50],
+          Extrapolate.CLAMP,
+        ),
+      },
+    ],
+  }));
 
-  function handleAnimationPosition() {
-    boxAnimation.value = Math.random() * (width - 100);
-  }
+  const logoStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(splashAnimation.value, [0, 25, 50], [0, 0.3, 1]),
+    transform: [
+      {
+        translateX: interpolate(
+          splashAnimation.value,
+          [0, 50],
+          [-50, 0],
+          Extrapolate.CLAMP,
+        ),
+      },
+    ],
+  }));
+
+  useEffect(() => {
+    splashAnimation.value = withTiming(50, { duration: 1000 });
+  }, []);
 
   return (
     <Fragment>
@@ -51,8 +61,13 @@ export const Splash: React.FC = () => {
       />
 
       <Container>
-        <Animated.View style={[styles.box, boxAnimatedStyles]} />
-        <Button title="Mover" onPress={handleAnimationPosition} />
+        <Animated.View style={[brandStyle, styles.logo]}>
+          <Brand width={RFValue(80)} height={RFValue(50)} />
+        </Animated.View>
+
+        <Animated.View style={[logoStyle, styles.logo]}>
+          <Logo width={RFValue(180)} height={RFValue(20)} />
+        </Animated.View>
       </Container>
     </Fragment>
   );
