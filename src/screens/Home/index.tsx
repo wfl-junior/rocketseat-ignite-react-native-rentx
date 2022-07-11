@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Fragment, useEffect, useState } from "react";
-import { FlatList, StatusBar } from "react-native";
+import { Alert, FlatList, StatusBar } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import Logo from "../../assets/logo.svg";
 import { CarCard } from "../../components/CarCard";
@@ -26,7 +26,10 @@ export const Home: React.FC = () => {
     api
       .get<CarDTO[]>("/cars")
       .then(response => setCars(response.data))
-      .catch(console.warn)
+      .catch(error => {
+        console.warn(error);
+        Alert.alert("Não foi possível buscar os dados.");
+      })
       .finally(() => setIsLoading(false));
   }, []);
 

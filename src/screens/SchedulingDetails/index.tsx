@@ -48,14 +48,18 @@ export const SchedulingDetails: React.FC = () => {
     params: { car, dates },
   } = useRoute<RouteProp<{ params: { car: CarDTO; dates: string[] } }>>();
 
-  const [startDate, endDate] = useMemo(() => {
-    const startDate = format(getPlatformDate(new Date(dates[0])), "dd/MM/yyyy");
-    const endDate = format(
+  const { startDateFormatted, endDateFormatted } = useMemo(() => {
+    const startDateFormatted = format(
+      getPlatformDate(new Date(dates[0])),
+      "dd/MM/yyyy",
+    );
+
+    const endDateFormatted = format(
       getPlatformDate(new Date(dates[dates.length - 1])),
       "dd/MM/yyyy",
     );
 
-    return [startDate, endDate];
+    return { startDateFormatted, endDateFormatted };
   }, [dates]);
 
   async function handleRentNow() {
@@ -66,6 +70,13 @@ export const SchedulingDetails: React.FC = () => {
         id: string;
         unavailable_dates: string[];
       }>(`/schedules_bycars/${car.id}`);
+
+      await api.post("/schedules_byuser", {
+        user_id: 1,
+        car,
+        startDate: startDateFormatted,
+        endDate: endDateFormatted,
+      });
 
       await api.put(`/schedules_bycars/${car.id}`, {
         id: car.id,
@@ -134,7 +145,7 @@ export const SchedulingDetails: React.FC = () => {
 
             <DateInfo>
               <DateTitle>De</DateTitle>
-              <DateValue>{startDate}</DateValue>
+              <DateValue>{startDateFormatted}</DateValue>
             </DateInfo>
 
             <Feather
@@ -145,7 +156,7 @@ export const SchedulingDetails: React.FC = () => {
 
             <DateInfo>
               <DateTitle>Até</DateTitle>
-              <DateValue>{endDate}</DateValue>
+              <DateValue>{endDateFormatted}</DateValue>
             </DateInfo>
           </RentalPeriod>
 
