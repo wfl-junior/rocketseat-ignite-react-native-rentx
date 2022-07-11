@@ -1,7 +1,6 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { Fragment } from "react";
 import { StatusBar } from "react-native";
-import SpeedIcon from "../../assets/speed.svg";
 import { Acessory } from "../../components/Acessory";
 import { BackButton } from "../../components/BackButton";
 import { Button } from "../../components/Button";
@@ -9,6 +8,7 @@ import { ImageSlider } from "../../components/ImageSlider";
 import { CarDTO } from "../../dtos/CarDTO";
 import { useStackNavigation } from "../../hooks/useStackNavigation";
 import { formatPrice } from "../../utils/formatPrice";
+import { getAccessoryIcon } from "../../utils/getAccessoryIcon";
 import {
   About,
   Accessories,
@@ -70,7 +70,7 @@ export const CarDetails: React.FC = () => {
             {car.accessories.map(accessory => (
               <Acessory
                 key={accessory.type}
-                icon={SpeedIcon}
+                icon={getAccessoryIcon(accessory.type)}
                 name={accessory.name}
               />
             ))}

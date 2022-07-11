@@ -7,9 +7,9 @@
       "about": "O carro ainda tem sistema de tração nas quatro rodas Quattro com diferencial traseiro esportivo de série. De acordo com a Audi, ele faz o mesmo em 3,8 segundos na Sportback.",
       "rent": {
         "period": "Ao dia",
-        "price": 120
+        "price": 180
       },
-      "fuel_type": "electric",
+      "fuel_type": "gasoline_motor",
       "thumbnail": "https://storage.googleapis.com/golden-wind/ignite/react-native/thumbnails/1.png",
       "accessories": [
         {
@@ -52,7 +52,7 @@
         "period": "Ao dia",
         "price": 340
       },
-      "fuel_type": "gasoline_motor",
+      "fuel_type": "hybrid_motor",
       "thumbnail": "https://storage.googleapis.com/golden-wind/ignite/react-native/thumbnails/2.png",
       "accessories": [
         {
@@ -135,9 +135,9 @@
       "about": "Este é automóvel desportivo. Surgiu do lendário touro de lide indultado na praça Real Maestranza de Sevilla. É um belíssimo carro para quem gosta de acelerar.",
       "rent": {
         "period": "Ao dia",
-        "price": 120
+        "price": 770
       },
-      "fuel_type": "electric_motor",
+      "fuel_type": "gasoline_motor",
       "thumbnail": "https://storage.googleapis.com/golden-wind/ignite/react-native/thumbnails/4.png",
       "accessories": [
         {
@@ -178,9 +178,9 @@
       "about": "A Poderosa Combinação de um Motor Elétrico de Alto Desempenho e um Motor a Combustão. Compacto e Inovador. Com Design Expressivo, Tecnologias Intuitivas e Estilo Urbano.",
       "rent": {
         "period": "Ao dia",
-        "price": 120
+        "price": 150
       },
-      "fuel_type": "gasoline_motor",
+      "fuel_type": "electric_motor",
       "thumbnail": "https://storage.googleapis.com/golden-wind/ignite/react-native/thumbnails/5.png",
       "accessories": [
         {
@@ -223,7 +223,7 @@
         "period": "Ao dia",
         "price": 220
       },
-      "fuel_type": "hybrid_motor",
+      "fuel_type": "gasoline_motor",
       "thumbnail": "https://storage.googleapis.com/golden-wind/ignite/react-native/thumbnails/6.png",
       "accessories": [
         {
@@ -349,9 +349,9 @@
         "about": "O carro ainda tem sistema de tração nas quatro rodas Quattro com diferencial traseiro esportivo de série. De acordo com a Audi, ele faz o mesmo em 3,8 segundos na Sportback.",
         "rent": {
           "period": "Ao dia",
-          "price": 120
+          "price": 180
         },
-        "fuel_type": "electric",
+        "fuel_type": "gasoline_motor",
         "thumbnail": "https://storage.googleapis.com/golden-wind/ignite/react-native/thumbnails/1.png",
         "accessories": [
           {
@@ -447,9 +447,9 @@
         "about": "A Poderosa Combinação de um Motor Elétrico de Alto Desempenho e um Motor a Combustão. Compacto e Inovador. Com Design Expressivo, Tecnologias Intuitivas e Estilo Urbano.",
         "rent": {
           "period": "Ao dia",
-          "price": 120
+          "price": 150
         },
-        "fuel_type": "gasoline_motor",
+        "fuel_type": "electric_motor",
         "thumbnail": "https://storage.googleapis.com/golden-wind/ignite/react-native/thumbnails/5.png",
         "accessories": [
           {
@@ -496,9 +496,9 @@
         "about": "O carro ainda tem sistema de tração nas quatro rodas Quattro com diferencial traseiro esportivo de série. De acordo com a Audi, ele faz o mesmo em 3,8 segundos na Sportback.",
         "rent": {
           "period": "Ao dia",
-          "price": 120
+          "price": 180
         },
-        "fuel_type": "electric",
+        "fuel_type": "gasoline_motor",
         "thumbnail": "https://storage.googleapis.com/golden-wind/ignite/react-native/thumbnails/1.png",
         "accessories": [
           {
@@ -547,7 +547,7 @@
           "period": "Ao dia",
           "price": 340
         },
-        "fuel_type": "gasoline_motor",
+        "fuel_type": "hybrid_motor",
         "thumbnail": "https://storage.googleapis.com/golden-wind/ignite/react-native/thumbnails/2.png",
         "accessories": [
           {
@@ -595,7 +595,7 @@
           "period": "Ao dia",
           "price": 340
         },
-        "fuel_type": "gasoline_motor",
+        "fuel_type": "hybrid_motor",
         "thumbnail": "https://storage.googleapis.com/golden-wind/ignite/react-native/thumbnails/2.png",
         "accessories": [
           {
@@ -643,7 +643,7 @@
           "period": "Ao dia",
           "price": 340
         },
-        "fuel_type": "gasoline_motor",
+        "fuel_type": "hybrid_motor",
         "thumbnail": "https://storage.googleapis.com/golden-wind/ignite/react-native/thumbnails/2.png",
         "accessories": [
           {
@@ -691,7 +691,7 @@
           "period": "Ao dia",
           "price": 340
         },
-        "fuel_type": "gasoline_motor",
+        "fuel_type": "hybrid_motor",
         "thumbnail": "https://storage.googleapis.com/golden-wind/ignite/react-native/thumbnails/2.png",
         "accessories": [
           {
@@ -739,7 +739,7 @@
           "period": "Ao dia",
           "price": 340
         },
-        "fuel_type": "gasoline_motor",
+        "fuel_type": "hybrid_motor",
         "thumbnail": "https://storage.googleapis.com/golden-wind/ignite/react-native/thumbnails/2.png",
         "accessories": [
           {
@@ -787,7 +787,7 @@
           "period": "Ao dia",
           "price": 340
         },
-        "fuel_type": "gasoline_motor",
+        "fuel_type": "hybrid_motor",
         "thumbnail": "https://storage.googleapis.com/golden-wind/ignite/react-native/thumbnails/2.png",
         "accessories": [
           {
@@ -835,7 +835,7 @@
           "period": "Ao dia",
           "price": 340
         },
-        "fuel_type": "gasoline_motor",
+        "fuel_type": "hybrid_motor",
         "thumbnail": "https://storage.googleapis.com/golden-wind/ignite/react-native/thumbnails/2.png",
         "accessories": [
           {
@@ -883,7 +883,7 @@
           "period": "Ao dia",
           "price": 340
         },
-        "fuel_type": "gasoline_motor",
+        "fuel_type": "hybrid_motor",
         "thumbnail": "https://storage.googleapis.com/golden-wind/ignite/react-native/thumbnails/2.png",
         "accessories": [
           {
@@ -931,7 +931,7 @@
           "period": "Ao dia",
           "price": 340
         },
-        "fuel_type": "gasoline_motor",
+        "fuel_type": "hybrid_motor",
         "thumbnail": "https://storage.googleapis.com/golden-wind/ignite/react-native/thumbnails/2.png",
         "accessories": [
           {
@@ -979,7 +979,7 @@
           "period": "Ao dia",
           "price": 340
         },
-        "fuel_type": "gasoline_motor",
+        "fuel_type": "hybrid_motor",
         "thumbnail": "https://storage.googleapis.com/golden-wind/ignite/react-native/thumbnails/2.png",
         "accessories": [
           {
@@ -1027,7 +1027,7 @@
           "period": "Ao dia",
           "price": 340
         },
-        "fuel_type": "gasoline_motor",
+        "fuel_type": "hybrid_motor",
         "thumbnail": "https://storage.googleapis.com/golden-wind/ignite/react-native/thumbnails/2.png",
         "accessories": [
           {
@@ -1075,7 +1075,7 @@
           "period": "Ao dia",
           "price": 340
         },
-        "fuel_type": "gasoline_motor",
+        "fuel_type": "hybrid_motor",
         "thumbnail": "https://storage.googleapis.com/golden-wind/ignite/react-native/thumbnails/2.png",
         "accessories": [
           {
@@ -1123,7 +1123,7 @@
           "period": "Ao dia",
           "price": 340
         },
-        "fuel_type": "gasoline_motor",
+        "fuel_type": "hybrid_motor",
         "thumbnail": "https://storage.googleapis.com/golden-wind/ignite/react-native/thumbnails/2.png",
         "accessories": [
           {
@@ -1171,7 +1171,7 @@
           "period": "Ao dia",
           "price": 340
         },
-        "fuel_type": "gasoline_motor",
+        "fuel_type": "hybrid_motor",
         "thumbnail": "https://storage.googleapis.com/golden-wind/ignite/react-native/thumbnails/2.png",
         "accessories": [
           {
@@ -1219,7 +1219,7 @@
           "period": "Ao dia",
           "price": 340
         },
-        "fuel_type": "gasoline_motor",
+        "fuel_type": "hybrid_motor",
         "thumbnail": "https://storage.googleapis.com/golden-wind/ignite/react-native/thumbnails/2.png",
         "accessories": [
           {
@@ -1314,9 +1314,9 @@
         "about": "A Poderosa Combinação de um Motor Elétrico de Alto Desempenho e um Motor a Combustão. Compacto e Inovador. Com Design Expressivo, Tecnologias Intuitivas e Estilo Urbano.",
         "rent": {
           "period": "Ao dia",
-          "price": 120
+          "price": 150
         },
-        "fuel_type": "gasoline_motor",
+        "fuel_type": "electric_motor",
         "thumbnail": "https://storage.googleapis.com/golden-wind/ignite/react-native/thumbnails/5.png",
         "accessories": [
           {
@@ -1363,9 +1363,9 @@
         "about": "A Poderosa Combinação de um Motor Elétrico de Alto Desempenho e um Motor a Combustão. Compacto e Inovador. Com Design Expressivo, Tecnologias Intuitivas e Estilo Urbano.",
         "rent": {
           "period": "Ao dia",
-          "price": 120
+          "price": 150
         },
-        "fuel_type": "gasoline_motor",
+        "fuel_type": "electric_motor",
         "thumbnail": "https://storage.googleapis.com/golden-wind/ignite/react-native/thumbnails/5.png",
         "accessories": [
           {
@@ -1412,9 +1412,9 @@
         "about": "O carro ainda tem sistema de tração nas quatro rodas Quattro com diferencial traseiro esportivo de série. De acordo com a Audi, ele faz o mesmo em 3,8 segundos na Sportback.",
         "rent": {
           "period": "Ao dia",
-          "price": 120
+          "price": 180
         },
-        "fuel_type": "electric",
+        "fuel_type": "gasoline_motor",
         "thumbnail": "https://storage.googleapis.com/golden-wind/ignite/react-native/thumbnails/1.png",
         "accessories": [
           {
