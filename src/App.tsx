@@ -56,7 +56,11 @@ export const App: React.FC = () => {
   }, [appIsReady]);
 
   if (!appIsReady) {
-    return <Splash />;
+    return (
+      <ThemeProvider theme={theme}>
+        <Splash />
+      </ThemeProvider>
+    );
   }
 
   return (
