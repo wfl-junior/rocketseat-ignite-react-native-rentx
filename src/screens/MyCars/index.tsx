@@ -1,24 +1,29 @@
 import { Fragment, useEffect, useState } from "react";
-import { Alert, StatusBar } from "react-native";
-import { CarDTO } from "../../dtos/CarDTO";
+import { Alert, FlatList, StatusBar } from "react-native";
+import { BackButton } from "../../components/BackButton";
+import { CarCard } from "../../components/CarCard";
+import { Loading } from "../../components/Loading";
+import { UserScheduleDTO } from "../../dtos/UserScheduleDTO";
 import { api } from "../../services/api";
-import { Container } from "./styles";
-
-interface UserSchedule {
-  id: number;
-  user_id: number;
-  startDate: string;
-  endDate: string;
-  car: CarDTO;
-}
+import { theme } from "../../styles/theme";
+import {
+  Appointments,
+  AppointmentsQuantity,
+  AppointmentsTitle,
+  Container,
+  Content,
+  Header,
+  SubTitle,
+  Title,
+} from "./styles";
 
 export const MyCars: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [schedules, setSchedules] = useState<UserSchedule[]>([]);
+  const [schedules, setSchedules] = useState<UserScheduleDTO[]>([]);
 
   useEffect(() => {
     api
-      .get<UserSchedule[]>("/schedules_byuser?user_id=1")
+      .get<UserScheduleDTO[]>("/schedules_byuser?user_id=1")
       .then(response => setSchedules(response.data))
       .catch(error => {
         console.warn(error);
@@ -30,12 +35,45 @@ export const MyCars: React.FC = () => {
   return (
     <Fragment>
       <StatusBar
-        barStyle="dark-content"
+        barStyle="light-content"
         backgroundColor="transparent"
         translucent
       />
 
-      <Container>My Cars</Container>
+      <Container>
+        <Header>
+          <BackButton color={theme.colors.background.secondary} />
+
+          <Title>
+            Seus agendamentos {"\n"}
+            estão aqui.
+          </Title>
+
+          <SubTitle>Conforto, segurança e praticidade.</SubTitle>
+        </Header>
+
+        <Content>
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <Fragment>
+              <Appointments>
+                <AppointmentsTitle>Agendamentos feitos</AppointmentsTitle>
+                <AppointmentsQuantity>{schedules.length}</AppointmentsQuantity>
+              </Appointments>
+
+              <FlatList
+                data={schedules}
+                keyExtractor={schedule => schedule.id.toString()}
+                showsVerticalScrollIndicator={false}
+                renderItem={({ item: schedule }) => (
+                  <CarCard car={schedule.car} />
+                )}
+              />
+            </Fragment>
+          )}
+        </Content>
+      </Container>
     </Fragment>
   );
 };

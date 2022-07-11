@@ -10,7 +10,6 @@ export const Container = styled.View`
 
 export const Header = styled.View`
   width: 100%;
-  /* height: ${RFValue(325)}px; */
   background-color: ${({ theme }) => theme.colors.header};
   justify-content: center;
   padding: ${Constants.statusBarHeight}px ${RFValue(24)}px ${RFValue(32)}px;
@@ -21,6 +20,7 @@ export const Title = styled.Text`
   font-size: ${RFValue(30)}px;
   font-family: ${({ theme }) => theme.fonts.secondary[600]};
   margin-top: ${RFValue(24)}px;
+  line-height: ${RFValue(34)}px;
 `;
 
 export const RentalPeriod = styled.View`
