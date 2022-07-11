@@ -1,6 +1,14 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { Fragment } from "react";
 import { StatusBar } from "react-native";
+import Animated, {
+  Extrapolate,
+  interpolate,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue,
+} from "react-native-reanimated";
+import { RFValue } from "react-native-responsive-fontsize";
 import { Acessory } from "../../components/Acessory";
 import { BackButton } from "../../components/BackButton";
 import { Button } from "../../components/Button";
@@ -15,7 +23,6 @@ import {
   Brand,
   CarImages,
   Container,
-  Content,
   Description,
   Details,
   Footer,
@@ -32,6 +39,20 @@ export const CarDetails: React.FC = () => {
     params: { car },
   } = useRoute<RouteProp<{ params: { car: CarDTO } }>>();
 
+  const contentScrollY = useSharedValue(0);
+  const handleContentScroll = useAnimatedScrollHandler(event => {
+    contentScrollY.value = event.contentOffset.y;
+  });
+
+  const headerStyleAnimation = useAnimatedStyle(() => ({
+    height: interpolate(
+      contentScrollY.value,
+      [0, 200],
+      [200, 70],
+      Extrapolate.CLAMP,
+    ),
+  }));
+
   function handleChooseRentalPeriod() {
     navigate("Scheduling", { car });
   }
@@ -45,15 +66,25 @@ export const CarDetails: React.FC = () => {
       />
 
       <Container>
-        <Header>
-          <BackButton />
-        </Header>
+        <Animated.View style={[headerStyleAnimation]}>
+          <Header>
+            <BackButton />
+          </Header>
 
-        <CarImages>
-          <ImageSlider photos={car.photos} />
-        </CarImages>
+          <CarImages>
+            <ImageSlider photos={car.photos} />
+          </CarImages>
+        </Animated.View>
 
-        <Content showsVerticalScrollIndicator={false}>
+        <Animated.ScrollView
+          onScroll={handleContentScroll}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ alignItems: "center" }}
+          style={{
+            marginTop: RFValue(36),
+            marginBottom: RFValue(16),
+          }}
+        >
           <Details>
             <Description>
               <Brand>{car.brand}</Brand>
@@ -76,8 +107,18 @@ export const CarDetails: React.FC = () => {
             ))}
           </Accessories>
 
-          <About>{car.about}</About>
-        </Content>
+          <About>
+            {car.about}
+            {"\n\n"}
+            {car.about}
+            {"\n\n"}
+            {car.about}
+            {"\n\n"}
+            {car.about}
+            {"\n\n"}
+            {car.about}
+          </About>
+        </Animated.ScrollView>
 
         <Footer>
           <Button

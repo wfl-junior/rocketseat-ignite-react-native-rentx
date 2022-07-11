@@ -1,5 +1,4 @@
 import Constants from "expo-constants";
-import { ScrollView } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 
@@ -19,13 +18,6 @@ export const Header = styled.View`
 
 export const CarImages = styled.View`
   margin-top: ${Constants.statusBarHeight + 28}px;
-`;
-
-export const Content = styled(ScrollView).attrs({
-  contentContainerStyle: { alignItems: "center" },
-})`
-  margin-top: ${RFValue(36)}px;
-  margin-bottom: ${RFValue(16)}px;
 `;
 
 export const Details = styled.View`
