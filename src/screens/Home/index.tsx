@@ -17,7 +17,7 @@ import Animated, {
 import { RFValue } from "react-native-responsive-fontsize";
 import Logo from "../../assets/logo.svg";
 import { CarCard } from "../../components/CarCard";
-import { Loading } from "../../components/Loading";
+import { LoadingAnimation } from "../../components/LoadingAnimation";
 import { CarDTO } from "../../dtos/CarDTO";
 import { useStackNavigation } from "../../hooks/useStackNavigation";
 import { api } from "../../services/api";
@@ -119,7 +119,7 @@ export const Home: React.FC = () => {
         </Header>
 
         {isLoading ? (
-          <Loading />
+          <LoadingAnimation />
         ) : (
           <FlatList
             data={cars}

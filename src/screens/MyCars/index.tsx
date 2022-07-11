@@ -4,7 +4,7 @@ import { Alert, FlatList, StatusBar } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { BackButton } from "../../components/BackButton";
 import { CarCard } from "../../components/CarCard";
-import { Loading } from "../../components/Loading";
+import { LoadingAnimation } from "../../components/LoadingAnimation";
 import { UserScheduleDTO } from "../../dtos/UserScheduleDTO";
 import { api } from "../../services/api";
 import { theme } from "../../styles/theme";
@@ -60,7 +60,7 @@ export const MyCars: React.FC = () => {
         </Header>
 
         {isLoading ? (
-          <Loading />
+          <LoadingAnimation />
         ) : (
           <Content>
             <Appointments>

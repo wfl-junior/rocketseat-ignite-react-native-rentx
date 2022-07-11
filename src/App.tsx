@@ -10,10 +10,13 @@ import { Inter_400Regular, Inter_500Medium } from "@expo-google-fonts/inter";
 import { loadAsync } from "expo-font";
 import { hideAsync, preventAutoHideAsync } from "expo-splash-screen";
 import React, { useCallback, useEffect, useState } from "react";
+import { LogBox } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { ThemeProvider } from "styled-components/native";
 import { Routes } from "./routes";
 import { theme } from "./styles/theme";
+
+LogBox.ignoreLogs([/ViewPropTypes/i]);
 
 export const App: React.FC = () => {
   const [appIsReady, setAppIsReady] = useState(false);
