@@ -1,6 +1,12 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Fragment, useEffect, useState } from "react";
-import { Alert, FlatList, StatusBar, StyleSheet } from "react-native";
+import {
+  ActivityIndicator,
+  Alert,
+  FlatList,
+  StatusBar,
+  StyleSheet,
+} from "react-native";
 import { PanGestureHandler, RectButton } from "react-native-gesture-handler";
 import Animated, {
   useAnimatedGestureHandler,
@@ -100,7 +106,15 @@ export const Home: React.FC = () => {
         <Header>
           <HeaderContent>
             <Logo width={RFValue(108)} height={RFValue(12)} />
-            <TotalCars>Total de {cars.length} carros</TotalCars>
+
+            {isLoading ? (
+              <ActivityIndicator
+                size={RFValue(22)}
+                color={theme.colors.text.DEFAULT}
+              />
+            ) : (
+              <TotalCars>Total de {cars.length} carros</TotalCars>
+            )}
           </HeaderContent>
         </Header>
 

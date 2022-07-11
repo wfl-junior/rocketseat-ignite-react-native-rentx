@@ -1,3 +1,4 @@
+import { CommonActions } from "@react-navigation/native";
 import { Fragment, useEffect } from "react";
 import { StatusBar, StyleSheet } from "react-native";
 import Animated, {
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
 });
 
 export const Splash: React.FC = () => {
-  const { navigate } = useStackNavigation();
+  const { dispatch } = useStackNavigation();
   const splashAnimation = useSharedValue(0);
   const brandStyle = useAnimatedStyle(() => ({
     opacity: interpolate(splashAnimation.value, [0, 50], [1, 0]),
@@ -52,7 +53,13 @@ export const Splash: React.FC = () => {
   }));
 
   function startApp() {
-    navigate("Home");
+    // reseta para Home ser inicial, previne que usuário volte para Splash depois
+    dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{ name: "Home" }],
+      }),
+    );
   }
 
   useEffect(() => {
