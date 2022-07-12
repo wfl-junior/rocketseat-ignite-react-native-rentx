@@ -13,6 +13,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { LogBox } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { ThemeProvider } from "styled-components/native";
+import { AuthContextProvider } from "./contexts/AuthContext";
 import { Routes } from "./routes";
 import { theme } from "./styles/theme";
 
@@ -64,7 +65,9 @@ export const App: React.FC = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }} onLayout={handleLayoutRootView}>
       <ThemeProvider theme={theme}>
-        <Routes />
+        <AuthContextProvider>
+          <Routes />
+        </AuthContextProvider>
       </ThemeProvider>
     </GestureHandlerRootView>
   );

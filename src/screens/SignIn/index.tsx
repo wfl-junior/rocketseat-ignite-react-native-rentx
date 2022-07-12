@@ -10,6 +10,7 @@ import * as yup from "yup";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { PasswordInput } from "../../components/PasswordInput";
+import { useAuthContext } from "../../contexts/AuthContext";
 import { useStackNavigation } from "../../hooks/useStackNavigation";
 import { theme } from "../../styles/theme";
 import { Container, Footer, Form, Header, SubTitle, Title } from "./styles";
@@ -26,13 +27,14 @@ export const SignIn: React.FC = () => {
   const { navigate } = useStackNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { signIn } = useAuthContext();
 
   async function handleSignIn() {
     try {
-      await signInValidationSchema.validate({ email, password });
+      const credentials = { email, password };
+      await signInValidationSchema.validate(credentials);
+      await signIn(credentials);
       Alert.alert("Tudo certo!");
-
-      // TODO: Fazer Login
     } catch (error) {
       if (error instanceof yup.ValidationError) {
         return Alert.alert("Opa!", error.message);
@@ -40,7 +42,7 @@ export const SignIn: React.FC = () => {
 
       Alert.alert(
         "Erro na autenticação",
-        "Ocorreu um erro ao fazer login, verifique as credencias",
+        "Ocorreu um erro ao fazer login, verifique as credenciais",
       );
     }
   }
