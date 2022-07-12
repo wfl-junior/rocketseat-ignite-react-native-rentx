@@ -1,13 +1,8 @@
 import { useRef, useState } from "react";
 import { FlatList, ViewToken } from "react-native";
 import { CarDTO } from "../../dtos/CarDTO";
-import {
-  CarImage,
-  CarImageWrapper,
-  Container,
-  ImageIndex,
-  ImageIndexes,
-} from "./styles";
+import { Bullet } from "../Bullet";
+import { CarImage, CarImageWrapper, Container, ImageIndexes } from "./styles";
 
 interface ViewableItemsChangedInfo {
   viewableItems: ViewToken[];
@@ -29,7 +24,7 @@ export const ImageSlider: React.FC<ImageSliderProps> = ({ photos: images }) => {
     <Container>
       <ImageIndexes>
         {images.map((image, index) => (
-          <ImageIndex key={image} active={index === activeImageIndex} />
+          <Bullet key={image} active={index === activeImageIndex} />
         ))}
       </ImageIndexes>
 

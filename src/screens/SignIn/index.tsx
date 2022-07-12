@@ -10,6 +10,7 @@ import * as yup from "yup";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { PasswordInput } from "../../components/PasswordInput";
+import { useStackNavigation } from "../../hooks/useStackNavigation";
 import { theme } from "../../styles/theme";
 import { Container, Footer, Form, Header, SubTitle, Title } from "./styles";
 
@@ -22,6 +23,7 @@ const signInValidationSchema = yup.object({
 });
 
 export const SignIn: React.FC = () => {
+  const { navigate } = useStackNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -41,6 +43,10 @@ export const SignIn: React.FC = () => {
         "Ocorreu um erro ao fazer login, verifique as credencias",
       );
     }
+  }
+
+  function handleCreateNewAccount() {
+    navigate("SignUp");
   }
 
   return (
@@ -89,7 +95,7 @@ export const SignIn: React.FC = () => {
 
             <Button
               title="Criar conta gratuita"
-              onPress={() => {}}
+              onPress={handleCreateNewAccount}
               color={theme.colors.background.secondary}
               textColor={theme.colors.title}
               style={{ marginTop: RFValue(8) }}
