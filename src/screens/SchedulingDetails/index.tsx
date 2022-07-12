@@ -1,5 +1,4 @@
 import { Feather } from "@expo/vector-icons";
-import { RouteProp, useRoute } from "@react-navigation/native";
 import { format } from "date-fns";
 import Constants from "expo-constants";
 import { Fragment, useMemo, useState } from "react";
@@ -16,8 +15,8 @@ import { Acessory } from "../../components/Acessory";
 import { BackButton } from "../../components/BackButton";
 import { Button } from "../../components/Button";
 import { ImageSlider } from "../../components/ImageSlider";
-import { CarDTO } from "../../dtos/CarDTO";
 import { useStackNavigation } from "../../hooks/useStackNavigation";
+import { useStackRoute } from "../../hooks/useStackRoute";
 import { api } from "../../services/api";
 import { theme } from "../../styles/theme";
 import { formatPrice } from "../../utils/formatPrice";
@@ -62,7 +61,7 @@ export const SchedulingDetails: React.FC = () => {
   const { navigate } = useStackNavigation();
   const {
     params: { car, dates },
-  } = useRoute<RouteProp<{ params: { car: CarDTO; dates: string[] } }>>();
+  } = useStackRoute<"SchedulingDetails">();
 
   const { startDateFormatted, endDateFormatted } = useMemo(() => {
     const startDateFormatted = format(

@@ -1,4 +1,3 @@
-import { RouteProp, useRoute } from "@react-navigation/native";
 import { format } from "date-fns";
 import { Fragment, useState } from "react";
 import { StatusBar } from "react-native";
@@ -8,8 +7,8 @@ import { BackButton } from "../../components/BackButton";
 import { Button } from "../../components/Button";
 import { Calendar, MarkedDateProps } from "../../components/Calendar";
 import { generateInterval } from "../../components/Calendar/generateInterval";
-import { CarDTO } from "../../dtos/CarDTO";
 import { useStackNavigation } from "../../hooks/useStackNavigation";
+import { useStackRoute } from "../../hooks/useStackRoute";
 import { theme } from "../../styles/theme";
 import { getPlatformDate } from "../../utils/getPlatformDate";
 import {
@@ -33,7 +32,7 @@ export const Scheduling: React.FC = () => {
   const { navigate } = useStackNavigation();
   const {
     params: { car },
-  } = useRoute<RouteProp<{ params: { car: CarDTO } }>>();
+  } = useStackRoute<"Scheduling">();
   const [markedDates, setMarkedDates] = useState<MarkedDateProps>({});
   const [lastSelectedDate, setLastSelectedDate] = useState<DateData | null>(
     null,

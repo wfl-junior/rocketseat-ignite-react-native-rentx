@@ -14,7 +14,13 @@ import { Splash } from "../screens/Splash";
 export type StackNavigationParamList = {
   SignIn: undefined;
   SignUpFirstStep: undefined;
-  SignUpSecondStep: undefined;
+  SignUpSecondStep: {
+    user: {
+      name: string;
+      email: string;
+      driverLicense: string;
+    };
+  };
   Splash: undefined;
   Home: undefined;
   CarDetails: {

@@ -15,11 +15,11 @@ import { theme } from "../../styles/theme";
 import { Container, Footer, Form, Header, SubTitle, Title } from "./styles";
 
 const signInValidationSchema = yup.object({
+  password: yup.string().required("A senha é obrigatória"),
   email: yup
     .string()
     .email("Digite um e-mail válido")
     .required("O e-mail é obrigatório"),
-  password: yup.string().required("A senha é obrigatória"),
 });
 
 export const SignIn: React.FC = () => {

@@ -1,4 +1,3 @@
-import { RouteProp, useRoute } from "@react-navigation/native";
 import Constants from "expo-constants";
 import { Fragment } from "react";
 import { StatusBar, StyleSheet } from "react-native";
@@ -14,8 +13,8 @@ import { Acessory } from "../../components/Acessory";
 import { BackButton } from "../../components/BackButton";
 import { Button } from "../../components/Button";
 import { ImageSlider } from "../../components/ImageSlider";
-import { CarDTO } from "../../dtos/CarDTO";
 import { useStackNavigation } from "../../hooks/useStackNavigation";
+import { useStackRoute } from "../../hooks/useStackRoute";
 import { theme } from "../../styles/theme";
 import { formatPrice } from "../../utils/formatPrice";
 import { getAccessoryIcon } from "../../utils/getAccessoryIcon";
@@ -48,7 +47,7 @@ export const CarDetails: React.FC = () => {
   const { navigate } = useStackNavigation();
   const {
     params: { car },
-  } = useRoute<RouteProp<{ params: { car: CarDTO } }>>();
+  } = useStackRoute<"CarDetails">();
 
   const contentScrollY = useSharedValue(0);
   const handleContentScroll = useAnimatedScrollHandler(event => {

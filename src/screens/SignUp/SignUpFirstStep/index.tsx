@@ -1,10 +1,12 @@
 import { Fragment, useState } from "react";
 import {
+  Alert,
   Keyboard,
   KeyboardAvoidingView,
   StatusBar,
   TouchableWithoutFeedback,
 } from "react-native";
+import * as yup from "yup";
 import { BackButton } from "../../../components/BackButton";
 import { Bullet } from "../../../components/Bullet";
 import { Button } from "../../../components/Button";
@@ -22,14 +24,42 @@ import {
   Title,
 } from "./styles";
 
+const signUpFirstStepValidationSchema = yup.object({
+  driverLicense: yup.string().required("A CNH é obrigatória"),
+  email: yup
+    .string()
+    .email("Digite um e-mail válido")
+    .required("O e-mail é obrigatório"),
+  name: yup.string().required("O nome é obrigatório"),
+});
+
 export const SignUpFirstStep: React.FC = () => {
   const { navigate } = useStackNavigation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [cnh, setCnh] = useState("");
+  const [driverLicense, setDriverLicense] = useState("");
 
-  function handleNextStep() {
-    navigate("SignUpSecondStep");
+  async function handleNextStep() {
+    try {
+      const data = {
+        name,
+        email,
+        driverLicense,
+      };
+
+      await signUpFirstStepValidationSchema.validate(data);
+
+      navigate("SignUpSecondStep", { user: data });
+    } catch (error) {
+      if (error instanceof yup.ValidationError) {
+        return Alert.alert("Opa!", error.message);
+      }
+
+      Alert.alert(
+        "Erro na autenticação",
+        "Ocorreu um erro ao fazer login, verifique as credencias",
+      );
+    }
   }
 
   return (
@@ -85,8 +115,8 @@ export const SignUpFirstStep: React.FC = () => {
                 iconName="credit-card"
                 placeholder="CNH"
                 keyboardType="number-pad"
-                value={cnh}
-                onChangeText={setCnh}
+                value={driverLicense}
+                onChangeText={setDriverLicense}
               />
             </Form>
 
