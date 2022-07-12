@@ -8,8 +8,7 @@ import {
 import { BackButton } from "../../../components/BackButton";
 import { Bullet } from "../../../components/Bullet";
 import { Button } from "../../../components/Button";
-import { Input } from "../../../components/Input";
-import { useStackNavigation } from "../../../hooks/useStackNavigation";
+import { PasswordInput } from "../../../components/PasswordInput";
 import { theme } from "../../../styles/theme";
 import {
   Container,
@@ -22,15 +21,9 @@ import {
   Title,
 } from "./styles";
 
-export const SignUpFirstStep: React.FC = () => {
-  const { navigate } = useStackNavigation();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [cnh, setCnh] = useState("");
-
-  function handleNextStep() {
-    navigate("SignUpSecondStep");
-  }
+export const SignUpSecondStep: React.FC = () => {
+  const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
   return (
     <Fragment>
@@ -46,8 +39,8 @@ export const SignUpFirstStep: React.FC = () => {
             <BackButton />
 
             <Steps>
-              <Bullet active />
               <Bullet />
+              <Bullet active />
             </Steps>
           </Header>
 
@@ -63,35 +56,25 @@ export const SignUpFirstStep: React.FC = () => {
             </SubTitle>
 
             <Form>
-              <FormTitle>1. Dados</FormTitle>
+              <FormTitle>2. Senha</FormTitle>
 
-              <Input
-                iconName="user"
-                placeholder="Nome"
-                autoCapitalize="words"
-                value={name}
-                onChangeText={setName}
+              <PasswordInput
+                iconName="lock"
+                placeholder="Senha"
+                value={password}
+                onChangeText={setPassword}
               />
 
-              <Input
-                iconName="mail"
-                placeholder="E-mail"
-                keyboardType="email-address"
-                value={email}
-                onChangeText={setEmail}
-              />
-
-              <Input
-                iconName="credit-card"
-                placeholder="CNH"
-                keyboardType="number-pad"
-                value={cnh}
-                onChangeText={setCnh}
+              <PasswordInput
+                iconName="lock"
+                placeholder="Repetir senha"
+                value={passwordConfirmation}
+                onChangeText={setPasswordConfirmation}
               />
             </Form>
 
             <Footer>
-              <Button title="Próximo" onPress={handleNextStep} />
+              <Button title="Cadastrar" color={theme.colors.success} />
             </Footer>
           </KeyboardAvoidingView>
         </Container>

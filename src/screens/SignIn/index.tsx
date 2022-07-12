@@ -46,7 +46,7 @@ export const SignIn: React.FC = () => {
   }
 
   function handleCreateNewAccount() {
-    navigate("SignUp");
+    navigate("SignUpFirstStep");
   }
 
   return (

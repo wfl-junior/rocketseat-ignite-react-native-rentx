@@ -8,11 +8,13 @@ import { SchedulingCompleted } from "../screens/SchedulingCompleted";
 import { SchedulingDetails } from "../screens/SchedulingDetails";
 import { SignIn } from "../screens/SignIn";
 import { SignUpFirstStep } from "../screens/SignUp/SignUpFirstStep";
+import { SignUpSecondStep } from "../screens/SignUp/SignUpSecondStep";
 import { Splash } from "../screens/Splash";
 
 export type StackNavigationParamList = {
   SignIn: undefined;
-  SignUp: undefined;
+  SignUpFirstStep: undefined;
+  SignUpSecondStep: undefined;
   Splash: undefined;
   Home: undefined;
   CarDetails: {
@@ -34,7 +36,8 @@ const { Navigator, Screen } = createStackNavigator<StackNavigationParamList>();
 export const StackRoutes: React.FC = () => (
   <Navigator screenOptions={{ headerShown: false }} initialRouteName="SignIn">
     <Screen name="SignIn" component={SignIn} />
-    <Screen name="SignUp" component={SignUpFirstStep} />
+    <Screen name="SignUpFirstStep" component={SignUpFirstStep} />
+    <Screen name="SignUpSecondStep" component={SignUpSecondStep} />
     <Screen name="Splash" component={Splash} />
     <Screen name="Home" component={Home} />
     <Screen name="CarDetails" component={CarDetails} />
