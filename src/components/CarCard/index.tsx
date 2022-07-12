@@ -38,7 +38,7 @@ export const CarCard: React.FC<CarCardProps> = ({ car, ...props }) => {
           <Icon
             width={RFValue(20)}
             height={RFValue(20)}
-            stroke={theme.colors.text.detail}
+            color={theme.colors.text.detail}
           />
         </About>
       </Details>

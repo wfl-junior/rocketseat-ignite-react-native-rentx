@@ -1,5 +1,11 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Platform } from "react-native";
+import { RFValue } from "react-native-responsive-fontsize";
+import CarIcon from "../assets/car.svg";
+import HomeIcon from "../assets/house.svg";
+import PeopleIcon from "../assets/people.svg";
 import { MyCars } from "../screens/MyCars";
+import { theme } from "../styles/theme";
 import { AppStackRoutes } from "./app.stack.routes";
 
 export type AppTabNavigationParamList = {
@@ -13,11 +19,47 @@ const { Navigator, Screen } =
 
 export const AppTabRoutes: React.FC = () => (
   <Navigator
-    screenOptions={{ headerShown: false }}
     initialRouteName="AppStackRoutes"
+    screenOptions={{
+      headerShown: false,
+      tabBarActiveTintColor: theme.colors.main.DEFAULT,
+      tabBarInactiveTintColor: theme.colors.text.detail,
+      tabBarShowLabel: false,
+      tabBarStyle: {
+        paddingVertical: Platform.OS === "ios" ? RFValue(20) : 0,
+        height: RFValue(78),
+        backgroundColor: theme.colors.background.primary,
+      },
+    }}
   >
-    <Screen name="AppStackRoutes" component={AppStackRoutes} />
-    <Screen name="MyCars" component={MyCars} />
-    <Screen name="Profile" component={AppStackRoutes} />
+    <Screen
+      name="AppStackRoutes"
+      component={AppStackRoutes}
+      options={{
+        tabBarIcon: ({ color }) => (
+          <HomeIcon width={RFValue(24)} height={RFValue(24)} color={color} />
+        ),
+      }}
+    />
+
+    <Screen
+      name="MyCars"
+      component={MyCars}
+      options={{
+        tabBarIcon: ({ color }) => (
+          <CarIcon width={RFValue(24)} height={RFValue(24)} color={color} />
+        ),
+      }}
+    />
+
+    <Screen
+      name="Profile"
+      component={AppStackRoutes}
+      options={{
+        tabBarIcon: ({ color }) => (
+          <PeopleIcon width={RFValue(24)} height={RFValue(24)} color={color} />
+        ),
+      }}
+    />
   </Navigator>
 );
