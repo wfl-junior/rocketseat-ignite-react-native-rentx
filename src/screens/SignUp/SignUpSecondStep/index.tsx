@@ -13,6 +13,7 @@ import { Button } from "../../../components/Button";
 import { PasswordInput } from "../../../components/PasswordInput";
 import { useStackNavigation } from "../../../hooks/useStackNavigation";
 import { useStackRoute } from "../../../hooks/useStackRoute";
+import { api } from "../../../services/api";
 import { theme } from "../../../styles/theme";
 import {
   Container,
@@ -40,25 +41,25 @@ export const SignUpSecondStep: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const { params } = useStackRoute<"SignUpSecondStep">();
+  const {
+    params: { user },
+  } = useStackRoute<"SignUpSecondStep">();
 
   async function handleSignUp() {
     setIsLoading(true);
 
     try {
-      const data = {
+      await signUpSecondStepValidationSchema.validate({
         password,
         passwordConfirmation,
-      };
+      });
 
-      await signUpSecondStepValidationSchema.validate(data);
-
-      const user = {
-        ...params.user,
-        ...data,
-      };
-
-      console.log(user);
+      await api.post("/users", {
+        name: user.name,
+        email: user.email,
+        driver_license: user.driverLicense,
+        password,
+      });
 
       navigate("Confirmation", {
         title: "Conta criada!",
@@ -72,10 +73,7 @@ export const SignUpSecondStep: React.FC = () => {
         return Alert.alert("Opa!", error.message);
       }
 
-      Alert.alert(
-        "Erro na autenticação",
-        "Ocorreu um erro ao fazer login, verifique as credencias",
-      );
+      Alert.alert("Opa!", "Não foi possível cadastrar");
     }
   }
 

@@ -55,10 +55,8 @@ export const SignUpFirstStep: React.FC = () => {
         return Alert.alert("Opa!", error.message);
       }
 
-      Alert.alert(
-        "Erro na autenticação",
-        "Ocorreu um erro ao fazer login, verifique as credencias",
-      );
+      console.warn(error);
+      Alert.alert("Opa!", "Não foi possível prosseguir");
     }
   }
 
