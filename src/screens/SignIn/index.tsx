@@ -1,15 +1,47 @@
 import { Fragment, useState } from "react";
-import { Keyboard, StatusBar, TouchableWithoutFeedback } from "react-native";
+import {
+  Alert,
+  Keyboard,
+  StatusBar,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
+import * as yup from "yup";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { PasswordInput } from "../../components/PasswordInput";
 import { theme } from "../../styles/theme";
 import { Container, Footer, Form, Header, SubTitle, Title } from "./styles";
 
+const signInValidationSchema = yup.object({
+  email: yup
+    .string()
+    .email("Digite um e-mail válido")
+    .required("O e-mail é obrigatório"),
+  password: yup.string().required("A senha é obrigatória"),
+});
+
 export const SignIn: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  async function handleSignIn() {
+    try {
+      await signInValidationSchema.validate({ email, password });
+      Alert.alert("Tudo certo!");
+
+      // TODO: Fazer Login
+    } catch (error) {
+      if (error instanceof yup.ValidationError) {
+        return Alert.alert("Opa!", error.message);
+      }
+
+      Alert.alert(
+        "Erro na autenticação",
+        "Ocorreu um erro ao fazer login, verifique as credencias",
+      );
+    }
+  }
 
   return (
     <Fragment>
@@ -53,12 +85,7 @@ export const SignIn: React.FC = () => {
           </Form>
 
           <Footer>
-            <Button
-              title="Login"
-              onPress={() => {}}
-              enabled={false}
-              isLoading={false}
-            />
+            <Button title="Login" onPress={handleSignIn} />
 
             <Button
               title="Criar conta gratuita"
