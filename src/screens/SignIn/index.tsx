@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Keyboard, StatusBar, TouchableWithoutFeedback } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { Button } from "../../components/Button";
@@ -7,57 +7,69 @@ import { PasswordInput } from "../../components/PasswordInput";
 import { theme } from "../../styles/theme";
 import { Container, Footer, Form, Header, SubTitle, Title } from "./styles";
 
-export const SignIn: React.FC = () => (
-  <Fragment>
-    <StatusBar
-      barStyle="dark-content"
-      backgroundColor={theme.colors.background.primary}
-      translucent
-    />
+export const SignIn: React.FC = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <Container behavior="position" enabled>
-        <Header>
-          <Title>
-            Estamos {"\n"}
-            quase lá.
-          </Title>
+  return (
+    <Fragment>
+      <StatusBar
+        barStyle="dark-content"
+        backgroundColor={theme.colors.background.primary}
+        translucent
+      />
 
-          <SubTitle>
-            Faça seu login para começar {"\n"}
-            uma experiência incrível.
-          </SubTitle>
-        </Header>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <Container behavior="position" enabled>
+          <Header>
+            <Title>
+              Estamos {"\n"}
+              quase lá.
+            </Title>
 
-        <Form>
-          <Input
-            iconName="mail"
-            placeholder="E-mail"
-            keyboardType="email-address"
-            autoCorrect={false}
-            autoCapitalize="none"
-          />
+            <SubTitle>
+              Faça seu login para começar {"\n"}
+              uma experiência incrível.
+            </SubTitle>
+          </Header>
 
-          <PasswordInput iconName="lock" placeholder="Senha" />
-        </Form>
+          <Form>
+            <Input
+              iconName="mail"
+              placeholder="E-mail"
+              keyboardType="email-address"
+              autoCorrect={false}
+              autoCapitalize="none"
+              value={email}
+              onChangeText={setEmail}
+            />
 
-        <Footer>
-          <Button
-            title="Login"
-            onPress={() => {}}
-            enabled={false}
-            isLoading={false}
-          />
+            <PasswordInput
+              iconName="lock"
+              placeholder="Senha"
+              value={password}
+              onChangeText={setPassword}
+            />
+          </Form>
 
-          <Button
-            title="Criar conta gratuita"
-            onPress={() => {}}
-            color={theme.colors.background.secondary}
-            textColor={theme.colors.title}
-            style={{ marginTop: RFValue(8) }}
-          />
-        </Footer>
-      </Container>
-    </TouchableWithoutFeedback>
-  </Fragment>
-);
+          <Footer>
+            <Button
+              title="Login"
+              onPress={() => {}}
+              enabled={false}
+              isLoading={false}
+            />
+
+            <Button
+              title="Criar conta gratuita"
+              onPress={() => {}}
+              color={theme.colors.background.secondary}
+              textColor={theme.colors.title}
+              style={{ marginTop: RFValue(8) }}
+            />
+          </Footer>
+        </Container>
+      </TouchableWithoutFeedback>
+    </Fragment>
+  );
+};

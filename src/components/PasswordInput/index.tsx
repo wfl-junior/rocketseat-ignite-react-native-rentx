@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { Input } from "../Input";
+import { Input, InputProps } from "../Input";
 
-export const PasswordInput: React.FC<
-  React.ComponentProps<typeof Input>
-> = props => {
+export const PasswordInput: React.FC<Omit<InputProps, "password">> = props => {
   const [isHidden, setIsHidden] = useState(true);
 
   return (

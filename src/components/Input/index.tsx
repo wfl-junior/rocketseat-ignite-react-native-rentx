@@ -1,5 +1,10 @@
 import { Feather } from "@expo/vector-icons";
-import { TextInputProps } from "react-native";
+import { useState } from "react";
+import {
+  NativeSyntheticEvent,
+  TextInputFocusEventData,
+  TextInputProps,
+} from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { theme } from "../../styles/theme";
 import {
@@ -9,7 +14,7 @@ import {
   InputText,
 } from "./styles";
 
-interface InputProps extends TextInputProps {
+export interface InputProps extends TextInputProps {
   iconName: React.ComponentProps<typeof Feather>["name"];
   password?: {
     isHidden: boolean;
@@ -20,33 +25,64 @@ interface InputProps extends TextInputProps {
 export const Input: React.FC<InputProps> = ({
   iconName,
   password,
+  value,
+  onFocus,
+  onBlur,
   ...props
-}) => (
-  <Container>
-    <IconContainer>
-      <Feather
-        name={iconName}
-        size={RFValue(24)}
-        color={theme.colors.text.DEFAULT}
-      />
-    </IconContainer>
+}) => {
+  const [isFocused, setIsFocused] = useState(false);
 
-    <InputText
-      placeholderTextColor={theme.colors.text.detail}
-      isPassword={!!password}
-      {...props}
-    />
+  const isFilled = !!value;
+  const isPassword = !!password;
 
-    {!!password && (
-      <ChangePasswordVisibilityButton
-        onPress={() => password.setIsHidden(isHidden => !isHidden)}
-      >
+  function handleInputFocus(
+    event: NativeSyntheticEvent<TextInputFocusEventData>,
+  ) {
+    setIsFocused(true);
+    onFocus?.(event);
+  }
+
+  function handleInputBlur(
+    event: NativeSyntheticEvent<TextInputFocusEventData>,
+  ) {
+    setIsFocused(false);
+    onBlur?.(event);
+  }
+
+  return (
+    <Container isFocused={isFocused}>
+      <IconContainer>
         <Feather
-          name={password.isHidden ? "eye" : "eye-off"}
+          name={iconName}
           size={RFValue(24)}
-          color={theme.colors.text.DEFAULT}
+          color={
+            isFilled || isFocused
+              ? theme.colors.main.DEFAULT
+              : theme.colors.text.DEFAULT
+          }
         />
-      </ChangePasswordVisibilityButton>
-    )}
-  </Container>
-);
+      </IconContainer>
+
+      <InputText
+        placeholderTextColor={theme.colors.text.detail}
+        isPassword={isPassword}
+        value={value}
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
+        {...props}
+      />
+
+      {isPassword && (
+        <ChangePasswordVisibilityButton
+          onPress={() => password.setIsHidden(isHidden => !isHidden)}
+        >
+          <Feather
+            name={password.isHidden ? "eye" : "eye-off"}
+            size={RFValue(24)}
+            color={theme.colors.text.DEFAULT}
+          />
+        </ChangePasswordVisibilityButton>
+      )}
+    </Container>
+  );
+};
