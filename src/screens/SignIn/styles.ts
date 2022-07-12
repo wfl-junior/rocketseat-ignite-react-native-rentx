@@ -2,9 +2,8 @@ import Constants from "expo-constants";
 import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 
-export const Container = styled.View`
-  flex: 1;
-  padding: 0 ${RFValue(24)}px;
+export const Container = styled.KeyboardAvoidingView`
+  padding: 0 ${RFValue(24)}px ${RFValue(16)}px;
   background-color: ${({ theme }) => theme.colors.background.primary};
 `;
 
