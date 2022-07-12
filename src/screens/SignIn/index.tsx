@@ -11,7 +11,7 @@ import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { PasswordInput } from "../../components/PasswordInput";
 import { useAuthContext } from "../../contexts/AuthContext";
-import { useStackNavigation } from "../../hooks/useStackNavigation";
+import { useAuthNavigation } from "../../hooks/useAuthNavigation";
 import { theme } from "../../styles/theme";
 import { Container, Footer, Form, Header, SubTitle, Title } from "./styles";
 
@@ -24,18 +24,22 @@ const signInValidationSchema = yup.object({
 });
 
 export const SignIn: React.FC = () => {
-  const { navigate } = useStackNavigation();
+  const { navigate } = useAuthNavigation();
+  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { signIn } = useAuthContext();
 
   async function handleSignIn() {
+    setIsLoading(true);
+
     try {
       const credentials = { email, password };
       await signInValidationSchema.validate(credentials);
       await signIn(credentials);
-      Alert.alert("Tudo certo!");
     } catch (error) {
+      setIsLoading(false);
+
       if (error instanceof yup.ValidationError) {
         return Alert.alert("Opa!", error.message);
       }
@@ -91,7 +95,12 @@ export const SignIn: React.FC = () => {
           </Form>
 
           <Footer>
-            <Button title="Login" onPress={handleSignIn} />
+            <Button
+              title="Login"
+              onPress={handleSignIn}
+              enabled={!isLoading}
+              isLoading={isLoading}
+            />
 
             <Button
               title="Criar conta gratuita"

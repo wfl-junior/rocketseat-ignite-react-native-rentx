@@ -1,20 +1,19 @@
 import { Fragment } from "react";
-import { Dimensions, StatusBar } from "react-native";
+import { StatusBar, useWindowDimensions } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import DoneIcon from "../../assets/done.svg";
 import Logo from "../../assets/logo_background_gray.svg";
 import { ConfirmButton } from "../../components/ConfirmButton";
-import { useStackNavigation } from "../../hooks/useStackNavigation";
-import { useStackRoute } from "../../hooks/useStackRoute";
+import { useAppStackNavigation } from "../../hooks/useAppStackNavigation";
+import { useAppStackRoute } from "../../hooks/useAppStackRoute";
 import { Container, Content, Footer, Message, Title } from "./styles";
 
-interface ConfirmationProps {}
-
-export const Confirmation: React.FC<ConfirmationProps> = () => {
-  const { navigate } = useStackNavigation();
+export const Confirmation: React.FC = () => {
+  const { width: windowWidth } = useWindowDimensions();
+  const { navigate } = useAppStackNavigation();
   const {
     params: { title, message, nextScreenRoute = "Home" },
-  } = useStackRoute<"Confirmation">();
+  } = useAppStackRoute<"Confirmation">();
 
   function handleConfirm() {
     navigate(nextScreenRoute);
@@ -29,12 +28,12 @@ export const Confirmation: React.FC<ConfirmationProps> = () => {
       />
 
       <Container>
-        <Logo width={Dimensions.get("window").width} />
+        <Logo width={windowWidth} />
 
         <Content>
           <DoneIcon width={RFValue(80)} height={RFValue(80)} />
           <Title>{title}</Title>
-          {message ? <Message>{message}</Message> : null}
+          <Message>{message}</Message>
         </Content>
 
         <Footer>

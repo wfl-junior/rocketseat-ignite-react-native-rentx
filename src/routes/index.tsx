@@ -1,8 +1,14 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { StackRoutes } from "./stack.routes";
+import { useAuthContext } from "../contexts/AuthContext";
+import { AppTabRoutes } from "./app.tab.routes";
+import { AuthRoutes } from "./auth.routes";
 
-export const Routes: React.FC = () => (
-  <NavigationContainer>
-    <StackRoutes />
-  </NavigationContainer>
-);
+export const Routes: React.FC = () => {
+  const { isAuthenticated } = useAuthContext();
+
+  return (
+    <NavigationContainer>
+      {isAuthenticated ? <AppTabRoutes /> : <AuthRoutes />}
+    </NavigationContainer>
+  );
+};

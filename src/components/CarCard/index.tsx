@@ -27,7 +27,7 @@ export const CarCard: React.FC<CarCardProps> = ({ car, ...props }) => {
     <Container {...props}>
       <Details>
         <Brand>{car.brand}</Brand>
-        <Model>{car.model}</Model>
+        <Model>{car.name}</Model>
 
         <About>
           <Rent>

@@ -11,8 +11,8 @@ import { BackButton } from "../../../components/BackButton";
 import { Bullet } from "../../../components/Bullet";
 import { Button } from "../../../components/Button";
 import { PasswordInput } from "../../../components/PasswordInput";
-import { useStackNavigation } from "../../../hooks/useStackNavigation";
-import { useStackRoute } from "../../../hooks/useStackRoute";
+import { useAuthNavigation } from "../../../hooks/useAuthNavigation";
+import { useAuthRoute } from "../../../hooks/useAuthRoute";
 import { api } from "../../../services/api";
 import { theme } from "../../../styles/theme";
 import {
@@ -37,13 +37,13 @@ const signUpSecondStepValidationSchema = yup.object({
 });
 
 export const SignUpSecondStep: React.FC = () => {
-  const { navigate } = useStackNavigation();
+  const { navigate } = useAuthNavigation();
   const [isLoading, setIsLoading] = useState(false);
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const {
     params: { user },
-  } = useStackRoute<"SignUpSecondStep">();
+  } = useAuthRoute<"SignUpSecondStep">();
 
   async function handleSignUp() {
     setIsLoading(true);

@@ -13,8 +13,8 @@ import { Acessory } from "../../components/Acessory";
 import { BackButton } from "../../components/BackButton";
 import { Button } from "../../components/Button";
 import { ImageSlider } from "../../components/ImageSlider";
-import { useStackNavigation } from "../../hooks/useStackNavigation";
-import { useStackRoute } from "../../hooks/useStackRoute";
+import { useAppStackNavigation } from "../../hooks/useAppStackNavigation";
+import { useAppStackRoute } from "../../hooks/useAppStackRoute";
 import { theme } from "../../styles/theme";
 import { formatPrice } from "../../utils/formatPrice";
 import { getAccessoryIcon } from "../../utils/getAccessoryIcon";
@@ -44,10 +44,10 @@ const styles = StyleSheet.create({
 });
 
 export const CarDetails: React.FC = () => {
-  const { navigate } = useStackNavigation();
+  const { navigate } = useAppStackNavigation();
   const {
     params: { car },
-  } = useStackRoute<"CarDetails">();
+  } = useAppStackRoute<"CarDetails">();
 
   const contentScrollY = useSharedValue(0);
   const handleContentScroll = useAnimatedScrollHandler(event => {
@@ -113,7 +113,7 @@ export const CarDetails: React.FC = () => {
           <Details>
             <Description>
               <Brand>{car.brand}</Brand>
-              <Model>{car.model}</Model>
+              <Model>{car.name}</Model>
             </Description>
 
             <Rent>

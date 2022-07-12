@@ -1,4 +1,4 @@
-import { CommonActions } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import { Fragment, useEffect } from "react";
 import { StatusBar, StyleSheet } from "react-native";
 import Animated, {
@@ -12,7 +12,6 @@ import Animated, {
 import { RFValue } from "react-native-responsive-fontsize";
 import Brand from "../../assets/brand.svg";
 import Logo from "../../assets/logo.svg";
-import { useStackNavigation } from "../../hooks/useStackNavigation";
 import { Container } from "./styles";
 
 const styles = StyleSheet.create({
@@ -22,7 +21,7 @@ const styles = StyleSheet.create({
 });
 
 export const Splash: React.FC = () => {
-  const { dispatch } = useStackNavigation();
+  const { dispatch } = useNavigation();
   const splashAnimation = useSharedValue(0);
   const brandStyle = useAnimatedStyle(() => ({
     opacity: interpolate(splashAnimation.value, [0, 50], [1, 0]),
@@ -53,11 +52,11 @@ export const Splash: React.FC = () => {
   }));
 
   function startApp() {
-    // reseta para Home ser inicial, previne que usuário volte para Splash depois
+    // reseta para SignIn ser inicial, previne que usuário volte para Splash depois
     dispatch(
       CommonActions.reset({
         index: 1,
-        routes: [{ name: "Home" }],
+        routes: [{ name: "SignIn" }],
       }),
     );
   }

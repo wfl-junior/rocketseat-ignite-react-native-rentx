@@ -12,7 +12,7 @@ export interface CarPhotoDTO {
 export interface CarDTO {
   id: string;
   brand: string;
-  model: string;
+  name: string;
   about: string;
   period: string;
   price: number;

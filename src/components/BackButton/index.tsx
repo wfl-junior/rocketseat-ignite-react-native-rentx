@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { BorderlessButtonProps } from "react-native-gesture-handler";
 import { RFValue } from "react-native-responsive-fontsize";
-import { useStackNavigation } from "../../hooks/useStackNavigation";
+import { useAppStackNavigation } from "../../hooks/useAppStackNavigation";
 import { theme } from "../../styles/theme";
 import { Container } from "./styles";
 
@@ -10,7 +10,7 @@ interface BackButtonProps extends BorderlessButtonProps {
 }
 
 export const BackButton: React.FC<BackButtonProps> = ({ color, ...props }) => {
-  const { goBack } = useStackNavigation();
+  const { goBack } = useAppStackNavigation();
 
   function handleGoBack() {
     goBack();

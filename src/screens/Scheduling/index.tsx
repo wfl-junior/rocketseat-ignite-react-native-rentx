@@ -7,8 +7,8 @@ import { BackButton } from "../../components/BackButton";
 import { Button } from "../../components/Button";
 import { Calendar, MarkedDateProps } from "../../components/Calendar";
 import { generateInterval } from "../../components/Calendar/generateInterval";
-import { useStackNavigation } from "../../hooks/useStackNavigation";
-import { useStackRoute } from "../../hooks/useStackRoute";
+import { useAppStackNavigation } from "../../hooks/useAppStackNavigation";
+import { useAppStackRoute } from "../../hooks/useAppStackRoute";
 import { theme } from "../../styles/theme";
 import { getPlatformDate } from "../../utils/getPlatformDate";
 import {
@@ -29,10 +29,10 @@ interface RentalPeriod {
 }
 
 export const Scheduling: React.FC = () => {
-  const { navigate } = useStackNavigation();
+  const { navigate } = useAppStackNavigation();
   const {
     params: { car },
-  } = useStackRoute<"Scheduling">();
+  } = useAppStackRoute<"Scheduling">();
   const [markedDates, setMarkedDates] = useState<MarkedDateProps>({});
   const [lastSelectedDate, setLastSelectedDate] = useState<DateData | null>(
     null,

@@ -11,7 +11,7 @@ import { BackButton } from "../../../components/BackButton";
 import { Bullet } from "../../../components/Bullet";
 import { Button } from "../../../components/Button";
 import { Input } from "../../../components/Input";
-import { useStackNavigation } from "../../../hooks/useStackNavigation";
+import { useAuthNavigation } from "../../../hooks/useAuthNavigation";
 import { theme } from "../../../styles/theme";
 import {
   Container,
@@ -34,7 +34,7 @@ const signUpFirstStepValidationSchema = yup.object({
 });
 
 export const SignUpFirstStep: React.FC = () => {
-  const { navigate } = useStackNavigation();
+  const { navigate } = useAuthNavigation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [driverLicense, setDriverLicense] = useState("");
