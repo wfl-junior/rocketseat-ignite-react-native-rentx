@@ -1,4 +1,3 @@
-import { CommonActions, useNavigation } from "@react-navigation/native";
 import { Fragment, useEffect } from "react";
 import { StatusBar, StyleSheet } from "react-native";
 import Animated, {
@@ -20,8 +19,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Splash: React.FC = () => {
-  const { dispatch } = useNavigation();
+interface SplashProps {
+  onEnd: () => void;
+}
+
+export const Splash: React.FC<SplashProps> = ({ onEnd }) => {
   const splashAnimation = useSharedValue(0);
   const brandStyle = useAnimatedStyle(() => ({
     opacity: interpolate(splashAnimation.value, [0, 50], [1, 0]),
@@ -51,20 +53,10 @@ export const Splash: React.FC = () => {
     ],
   }));
 
-  function startApp() {
-    // reseta para SignIn ser inicial, previne que usuário volte para Splash depois
-    dispatch(
-      CommonActions.reset({
-        index: 1,
-        routes: [{ name: "SignIn" }],
-      }),
-    );
-  }
-
   useEffect(() => {
     splashAnimation.value = withTiming(50, { duration: 1500 }, () => {
       "worklet";
-      runOnJS(startApp)();
+      runOnJS(onEnd)();
     });
   }, []);
 

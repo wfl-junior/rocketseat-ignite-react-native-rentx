@@ -3,10 +3,8 @@ import { Confirmation } from "../screens/Confirmation";
 import { SignIn } from "../screens/SignIn";
 import { SignUpFirstStep } from "../screens/SignUp/SignUpFirstStep";
 import { SignUpSecondStep } from "../screens/SignUp/SignUpSecondStep";
-import { Splash } from "../screens/Splash";
 
 export type AuthNavigationParamList = {
-  Splash: undefined;
   SignIn: undefined;
   SignUpFirstStep: undefined;
   SignUpSecondStep: {
@@ -26,8 +24,7 @@ export type AuthNavigationParamList = {
 const { Navigator, Screen } = createStackNavigator<AuthNavigationParamList>();
 
 export const AuthRoutes: React.FC = () => (
-  <Navigator screenOptions={{ headerShown: false }} initialRouteName="Splash">
-    <Screen name="Splash" component={Splash} />
+  <Navigator screenOptions={{ headerShown: false }} initialRouteName="SignIn">
     <Screen name="SignIn" component={SignIn} />
     <Screen name="SignUpFirstStep" component={SignUpFirstStep} />
     <Screen name="SignUpSecondStep" component={SignUpSecondStep} />
