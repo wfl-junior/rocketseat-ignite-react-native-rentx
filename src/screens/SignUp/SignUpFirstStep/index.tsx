@@ -1,10 +1,18 @@
-import { Fragment } from "react";
-import { StatusBar } from "react-native";
+import { Fragment, useState } from "react";
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  StatusBar,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { BackButton } from "../../../components/BackButton";
 import { Bullet } from "../../../components/Bullet";
+import { Button } from "../../../components/Button";
+import { Input } from "../../../components/Input";
 import { theme } from "../../../styles/theme";
 import {
   Container,
+  Footer,
   Form,
   FormTitle,
   Header,
@@ -13,37 +21,75 @@ import {
   Title,
 } from "./styles";
 
-export const SignUpFirstStep: React.FC = () => (
-  <Fragment>
-    <StatusBar
-      barStyle="dark-content"
-      backgroundColor={theme.colors.background.primary}
-      translucent
-    />
+export const SignUpFirstStep: React.FC = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [cnh, setCnh] = useState("");
 
-    <Container>
-      <Header>
-        <BackButton />
+  return (
+    <Fragment>
+      <StatusBar
+        barStyle="dark-content"
+        backgroundColor={theme.colors.background.primary}
+        translucent
+      />
 
-        <Steps>
-          <Bullet active />
-          <Bullet />
-        </Steps>
-      </Header>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <Container>
+          <Header>
+            <BackButton />
 
-      <Title>
-        Crie sua {"\n"}
-        conta
-      </Title>
+            <Steps>
+              <Bullet active />
+              <Bullet />
+            </Steps>
+          </Header>
 
-      <SubTitle>
-        Faça seu cadastro de {"\n"}
-        forma rápida e fácil.
-      </SubTitle>
+          <KeyboardAvoidingView behavior="position" enabled>
+            <Title>
+              Crie sua {"\n"}
+              conta
+            </Title>
 
-      <Form>
-        <FormTitle>1. Dados</FormTitle>
-      </Form>
-    </Container>
-  </Fragment>
-);
+            <SubTitle>
+              Faça seu cadastro de {"\n"}
+              forma rápida e fácil.
+            </SubTitle>
+
+            <Form>
+              <FormTitle>1. Dados</FormTitle>
+
+              <Input
+                iconName="user"
+                placeholder="Nome"
+                autoCapitalize="words"
+                value={name}
+                onChangeText={setName}
+              />
+
+              <Input
+                iconName="mail"
+                placeholder="E-mail"
+                keyboardType="email-address"
+                value={email}
+                onChangeText={setEmail}
+              />
+
+              <Input
+                iconName="credit-card"
+                placeholder="CNH"
+                keyboardType="number-pad"
+                value={cnh}
+                onChangeText={setCnh}
+              />
+            </Form>
+
+            <Footer>
+              <Button title="Próximo" />
+            </Footer>
+          </KeyboardAvoidingView>
+        </Container>
+      </TouchableWithoutFeedback>
+    </Fragment>
+  );
+};

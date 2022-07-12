@@ -69,6 +69,8 @@ export const Input: React.FC<InputProps> = ({
         value={value}
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
+        autoCorrect={false}
+        autoCapitalize="none"
         {...props}
       />
 

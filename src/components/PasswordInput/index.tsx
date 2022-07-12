@@ -6,8 +6,6 @@ export const PasswordInput: React.FC<Omit<InputProps, "password">> = props => {
 
   return (
     <Input
-      autoCorrect={false}
-      autoCapitalize="none"
       {...props}
       password={{ isHidden, setIsHidden }}
       secureTextEntry={isHidden}

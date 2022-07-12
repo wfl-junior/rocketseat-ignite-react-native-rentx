@@ -13,7 +13,10 @@ export const Header = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin-top: ${Constants.statusBarHeight + RFValue(19)}px;
+  padding-top: ${Constants.statusBarHeight + RFValue(19)}px;
+  padding-bottom: ${RFValue(16)}px;
+  background-color: ${({ theme }) => theme.colors.background.primary};
+  z-index: 1;
 `;
 
 export const Steps = styled.View`
@@ -25,7 +28,7 @@ export const Title = styled.Text`
   color: ${({ theme }) => theme.colors.title};
   font-size: ${RFValue(40)}px;
   font-family: ${({ theme }) => theme.fonts.secondary[600]};
-  margin-top: ${RFValue(60)}px;
+  margin-top: ${RFValue(44)}px;
 `;
 
 export const SubTitle = styled.Text`
@@ -39,11 +42,15 @@ export const SubTitle = styled.Text`
 export const Form = styled.View`
   width: 100%;
   margin-top: ${RFValue(64)}px;
-  margin-bottom: ${RFValue(16)}px;
 `;
 
 export const FormTitle = styled.Text`
   color: ${({ theme }) => theme.colors.title};
   font-size: ${RFValue(20)}px;
   font-family: ${({ theme }) => theme.fonts.secondary[600]};
+  margin-bottom: ${RFValue(24)}px;
+`;
+
+export const Footer = styled.View`
+  margin: ${RFValue(16)}px 0 ${RFValue(83)}px;
 `;
