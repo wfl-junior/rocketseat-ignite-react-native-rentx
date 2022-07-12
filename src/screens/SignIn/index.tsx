@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import {
   Alert,
   Keyboard,
@@ -11,6 +11,7 @@ import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { PasswordInput } from "../../components/PasswordInput";
 import { useAuthContext } from "../../contexts/AuthContext";
+import { database } from "../../database";
 import { useAuthNavigation } from "../../hooks/useAuthNavigation";
 import { theme } from "../../styles/theme";
 import { Container, Footer, Form, Header, SubTitle, Title } from "./styles";
@@ -29,6 +30,11 @@ export const SignIn: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { signIn } = useAuthContext();
+
+  useEffect(() => {
+    const userCollection = database.get("users");
+    userCollection.query().fetch().then(console.log).catch(console.warn);
+  }, []);
 
   async function handleSignIn() {
     setIsLoading(true);
