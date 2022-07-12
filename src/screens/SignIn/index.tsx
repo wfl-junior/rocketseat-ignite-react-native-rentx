@@ -3,6 +3,7 @@ import { StatusBar } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
+import { PasswordInput } from "../../components/PasswordInput";
 import { theme } from "../../styles/theme";
 import { Container, Footer, Form, Header, SubTitle, Title } from "./styles";
 
@@ -35,6 +36,8 @@ export const SignIn: React.FC = () => (
           autoCorrect={false}
           autoCapitalize="none"
         />
+
+        <PasswordInput iconName="lock" placeholder="Senha" />
       </Form>
 
       <Footer>
