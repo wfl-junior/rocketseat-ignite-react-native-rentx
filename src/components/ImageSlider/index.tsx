@@ -24,20 +24,20 @@ export const ImageSlider: React.FC<ImageSliderProps> = ({ photos: images }) => {
     <Container>
       <ImageIndexes>
         {images.map((image, index) => (
-          <Bullet key={image} active={index === activeImageIndex} />
+          <Bullet key={image.id} active={index === activeImageIndex} />
         ))}
       </ImageIndexes>
 
       <CarImageWrapper>
         <FlatList
           data={images}
-          keyExtractor={image => image}
+          keyExtractor={image => image.id}
           horizontal
           showsHorizontalScrollIndicator={false}
           onViewableItemsChanged={handleIndexChange.current}
           renderItem={({ item: image }) => (
             <CarImageWrapper>
-              <CarImage source={{ uri: image }} resizeMode="contain" />
+              <CarImage source={{ uri: image.photo }} resizeMode="contain" />
             </CarImageWrapper>
           )}
         />

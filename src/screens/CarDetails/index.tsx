@@ -117,8 +117,8 @@ export const CarDetails: React.FC = () => {
             </Description>
 
             <Rent>
-              <Period>{car.rent.period}</Period>
-              <Price>{formatPrice(car.rent.price)}</Price>
+              <Period>{car.period}</Period>
+              <Price>{formatPrice(car.price)}</Price>
             </Rent>
           </Details>
 

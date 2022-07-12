@@ -174,8 +174,8 @@ export const SchedulingDetails: React.FC = () => {
             </Description>
 
             <Rent>
-              <Period>{car.rent.period}</Period>
-              <Price>{formatPrice(car.rent.price)}</Price>
+              <Period>{car.period}</Period>
+              <Price>{formatPrice(car.price)}</Price>
             </Rent>
           </Details>
 
@@ -220,12 +220,12 @@ export const SchedulingDetails: React.FC = () => {
 
             <RentalPriceDetails>
               <RentalPriceQuota>
-                {formatPrice(car.rent.price)} x{dates.length} diária
+                {formatPrice(car.price)} x{dates.length} diária
                 {dates.length !== 1 && "s"}
               </RentalPriceQuota>
 
               <RentalPriceTotal>
-                {formatPrice(car.rent.price * dates.length)}
+                {formatPrice(car.price * dates.length)}
               </RentalPriceTotal>
             </RentalPriceDetails>
           </RentalPrice>

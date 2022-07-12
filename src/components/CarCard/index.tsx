@@ -13,7 +13,7 @@ import {
   Model,
   Period,
   Price,
-  Rent
+  Rent,
 } from "./styles";
 
 interface CarCardProps extends RectButtonProps {
@@ -31,8 +31,8 @@ export const CarCard: React.FC<CarCardProps> = ({ car, ...props }) => {
 
         <About>
           <Rent>
-            <Period>{car.rent.period}</Period>
-            <Price>{formatPrice(car.rent.price)}</Price>
+            <Period>{car.period}</Period>
+            <Price>{formatPrice(car.price)}</Price>
           </Rent>
 
           <Icon

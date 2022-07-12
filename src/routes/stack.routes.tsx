@@ -44,7 +44,7 @@ export type StackNavigationParamList = {
 const { Navigator, Screen } = createStackNavigator<StackNavigationParamList>();
 
 export const StackRoutes: React.FC = () => (
-  <Navigator screenOptions={{ headerShown: false }} initialRouteName="SignIn">
+  <Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
     <Screen name="SignIn" component={SignIn} />
     <Screen name="SignUpFirstStep" component={SignUpFirstStep} />
     <Screen name="SignUpSecondStep" component={SignUpSecondStep} />
