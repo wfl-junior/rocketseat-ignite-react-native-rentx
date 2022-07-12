@@ -11,6 +11,7 @@ import { BackButton } from "../../../components/BackButton";
 import { Bullet } from "../../../components/Bullet";
 import { Button } from "../../../components/Button";
 import { PasswordInput } from "../../../components/PasswordInput";
+import { useStackNavigation } from "../../../hooks/useStackNavigation";
 import { useStackRoute } from "../../../hooks/useStackRoute";
 import { theme } from "../../../styles/theme";
 import {
@@ -35,6 +36,7 @@ const signUpSecondStepValidationSchema = yup.object({
 });
 
 export const SignUpSecondStep: React.FC = () => {
+  const { navigate } = useStackNavigation();
   const [isLoading, setIsLoading] = useState(false);
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
@@ -58,7 +60,11 @@ export const SignUpSecondStep: React.FC = () => {
 
       console.log(user);
 
-      setIsLoading(false); // remover quando adicionar signup
+      navigate("Confirmation", {
+        title: "Conta criada!",
+        nextScreenRoute: "SignIn",
+        message: "Agora é só fazer login\ne aproveitar.",
+      });
     } catch (error) {
       setIsLoading(false);
 

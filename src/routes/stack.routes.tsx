@@ -1,10 +1,10 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { CarDTO } from "../dtos/CarDTO";
 import { CarDetails } from "../screens/CarDetails";
+import { Confirmation } from "../screens/Confirmation";
 import { Home } from "../screens/Home";
 import { MyCars } from "../screens/MyCars";
 import { Scheduling } from "../screens/Scheduling";
-import { SchedulingCompleted } from "../screens/SchedulingCompleted";
 import { SchedulingDetails } from "../screens/SchedulingDetails";
 import { SignIn } from "../screens/SignIn";
 import { SignUpFirstStep } from "../screens/SignUp/SignUpFirstStep";
@@ -33,7 +33,11 @@ export type StackNavigationParamList = {
     car: CarDTO;
     dates: string[];
   };
-  SchedulingCompleted: undefined;
+  Confirmation: {
+    title: string;
+    message: string;
+    nextScreenRoute?: keyof StackNavigationParamList;
+  };
   MyCars: undefined;
 };
 
@@ -49,7 +53,7 @@ export const StackRoutes: React.FC = () => (
     <Screen name="CarDetails" component={CarDetails} />
     <Screen name="Scheduling" component={Scheduling} />
     <Screen name="SchedulingDetails" component={SchedulingDetails} />
-    <Screen name="SchedulingCompleted" component={SchedulingCompleted} />
+    <Screen name="Confirmation" component={Confirmation} />
     <Screen name="MyCars" component={MyCars} />
   </Navigator>
 );

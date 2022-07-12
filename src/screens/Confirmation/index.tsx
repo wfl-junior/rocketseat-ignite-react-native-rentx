@@ -5,13 +5,19 @@ import DoneIcon from "../../assets/done.svg";
 import Logo from "../../assets/logo_background_gray.svg";
 import { ConfirmButton } from "../../components/ConfirmButton";
 import { useStackNavigation } from "../../hooks/useStackNavigation";
+import { useStackRoute } from "../../hooks/useStackRoute";
 import { Container, Content, Footer, Message, Title } from "./styles";
 
-export const SchedulingCompleted: React.FC = () => {
+interface ConfirmationProps {}
+
+export const Confirmation: React.FC<ConfirmationProps> = () => {
   const { navigate } = useStackNavigation();
+  const {
+    params: { title, message, nextScreenRoute = "Home" },
+  } = useStackRoute<"Confirmation">();
 
   function handleConfirm() {
-    navigate("Home");
+    navigate(nextScreenRoute);
   }
 
   return (
@@ -27,13 +33,8 @@ export const SchedulingCompleted: React.FC = () => {
 
         <Content>
           <DoneIcon width={RFValue(80)} height={RFValue(80)} />
-          <Title>Carro alugado!</Title>
-
-          <Message>
-            Agora você só precisa ir {"\n"}
-            até a concessionária da RENTX{"\n"}
-            pegar o seu automóvel.
-          </Message>
+          <Title>{title}</Title>
+          {message ? <Message>{message}</Message> : null}
         </Content>
 
         <Footer>

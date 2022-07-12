@@ -273,11 +273,7 @@
     },
     {
       "id": "49983f6c-a46a-4dfd-a86e-425b8c72e086",
-      "unavailable_dates": [
-        "2022-07-14",
-        "2022-07-15",
-        "2022-07-16"
-      ]
+      "unavailable_dates": []
     },
     {
       "id": "508e7193-0078-4615-9071-920b59038fda",
@@ -288,55 +284,5 @@
       "unavailable_dates": []
     }
   ],
-  "schedules_byuser": [
-    {
-      "user_id": 1,
-      "car": {
-        "id": "49983f6c-a46a-4dfd-a86e-425b8c72e086",
-        "brand": "Lamborghini",
-        "model": "Huracán",
-        "about": "Este é automóvel desportivo. Surgiu do lendário touro de lide indultado na praça Real Maestranza de Sevilla. É um belíssimo carro para quem gosta de acelerar.",
-        "rent": {
-          "period": "Ao dia",
-          "price": 770
-        },
-        "fuel_type": "gasoline_motor",
-        "thumbnail": "https://storage.googleapis.com/golden-wind/ignite/react-native/thumbnails/4.png",
-        "accessories": [
-          {
-            "type": "speed",
-            "name": "380km/h"
-          },
-          {
-            "type": "acceleration",
-            "name": "3.2s"
-          },
-          {
-            "type": "turning_diameter",
-            "name": "800 HP"
-          },
-          {
-            "type": "electric_motor",
-            "name": "Elétrico"
-          },
-          {
-            "type": "exchange",
-            "name": "Auto"
-          },
-          {
-            "type": "seats",
-            "name": "2 pessoas"
-          }
-        ],
-        "photos": [
-          "https://storage.googleapis.com/golden-wind/ignite/react-native/images/9.png",
-          "https://storage.googleapis.com/golden-wind/ignite/react-native/images/10.png",
-          "https://storage.googleapis.com/golden-wind/ignite/react-native/images/11.png"
-        ]
-      },
-      "startDate": "14/07/2022",
-      "endDate": "16/07/2022",
-      "id": 1
-    }
-  ]
+  "schedules_byuser": []
 }

@@ -121,7 +121,11 @@ export const SchedulingDetails: React.FC = () => {
         unavailable_dates: [...response.data.unavailable_dates, ...dates],
       });
 
-      navigate("SchedulingCompleted");
+      navigate("Confirmation", {
+        title: "Carro alugado!",
+        message:
+          "Agora você só precisa ir\naté a concessionária da RENTX\npegar o seu automóvel.",
+      });
     } catch (error) {
       console.warn(error);
       setIsLoading(false);
