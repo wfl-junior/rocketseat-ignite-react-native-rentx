@@ -2,7 +2,12 @@ import { Feather } from "@expo/vector-icons";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { launchImageLibraryAsync, MediaTypeOptions } from "expo-image-picker";
 import { Fragment, useState } from "react";
-import { Keyboard, StatusBar, TouchableWithoutFeedback } from "react-native";
+import {
+  Alert,
+  Keyboard,
+  StatusBar,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { BackButton } from "../../components/BackButton";
 import { Input } from "../../components/Input";
@@ -26,14 +31,21 @@ import {
 } from "./styles";
 
 export const Profile: React.FC = () => {
-  const { user } = useAuthContext();
+  const { user, signOut } = useAuthContext();
   const tabBarHeight = useBottomTabBarHeight();
   const [option, setOption] = useState<"data" | "password">("data");
   const [avatar, setAvatar] = useState(user!.avatar);
   const [name, setName] = useState(user!.name);
   const [driverLicense, setDriverLicense] = useState(user!.driver_license);
 
-  function handleSignOut() {}
+  async function handleSignOut() {
+    try {
+      await signOut();
+    } catch (error) {
+      console.warn(error);
+      Alert.alert("Não foi possível deslogar");
+    }
+  }
 
   async function handleEditPhoto() {
     const result = await launchImageLibraryAsync({
