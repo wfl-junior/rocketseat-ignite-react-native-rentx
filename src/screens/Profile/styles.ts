@@ -3,8 +3,7 @@ import { BorderlessButton, RectButton } from "react-native-gesture-handler";
 import { RFValue } from "react-native-responsive-fontsize";
 import styled, { css } from "styled-components/native";
 
-export const Container = styled.View`
-  flex: 1;
+export const Container = styled.KeyboardAvoidingView`
   background-color: ${({ theme }) => theme.colors.background.primary};
 `;
 
@@ -61,7 +60,6 @@ export const EditPhotoButton = styled(RectButton)`
 `;
 
 export const Content = styled.View`
-  flex: 1;
   padding: 0 ${RFValue(24)}px;
   margin-top: ${RFValue(122)}px;
 `;
@@ -116,3 +114,5 @@ export const OptionTitle = styled.Text<OptionsProps>`
     return theme.fonts.secondary[400];
   }};
 `;
+
+export const Section = styled.View``;
