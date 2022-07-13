@@ -47,13 +47,27 @@ export const Profile: React.FC = () => {
   const [name, setName] = useState(user!.name);
   const [driverLicense, setDriverLicense] = useState(user!.driver_license);
 
-  async function handleSignOut() {
-    try {
-      await signOut();
-    } catch (error) {
-      console.warn(error);
-      Alert.alert("Não foi possível deslogar");
-    }
+  function handleSignOut() {
+    Alert.alert(
+      "Tem certeza?",
+      "Se você sair, irá precisar de internet para conectar-se novamente.",
+      [
+        {
+          text: "Cancelar",
+        },
+        {
+          text: "Sair",
+          onPress: async () => {
+            try {
+              await signOut();
+            } catch (error) {
+              console.warn(error);
+              Alert.alert("Não foi possível deslogar");
+            }
+          },
+        },
+      ],
+    );
   }
 
   async function handleEditPhoto() {

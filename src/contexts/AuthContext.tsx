@@ -75,14 +75,13 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
     } = await api.post<SignInResponseData>("/sessions", credentials);
 
     const user_id = user.id;
-
     const userCollection = database.get<User>("users");
 
     await database.write(async () => {
       await userCollection.create(newUser => {
         user.id = newUser.id;
 
-        newUser.user_id = user.id;
+        newUser.user_id = user_id;
         newUser.name = user.name;
         newUser.email = user.email;
         newUser.driver_license = user.driver_license;
@@ -108,7 +107,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
 
     (api.defaults.headers as any).Authorization = "";
     setUser(null);
-  }, []);
+  }, [user]);
 
   const updateUser: AuthContextData["updateUser"] = useCallback(async user => {
     const userCollection = database.get<User>("users");
