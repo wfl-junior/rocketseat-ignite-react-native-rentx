@@ -1,5 +1,6 @@
 import { Feather } from "@expo/vector-icons";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { launchImageLibraryAsync, MediaTypeOptions } from "expo-image-picker";
 import { Fragment, useState } from "react";
 import { Keyboard, StatusBar, TouchableWithoutFeedback } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
@@ -25,13 +26,31 @@ import {
 } from "./styles";
 
 export const Profile: React.FC = () => {
+  const { user } = useAuthContext();
   const tabBarHeight = useBottomTabBarHeight();
   const [option, setOption] = useState<"data" | "password">("data");
-  const { user } = useAuthContext();
+  const [avatar, setAvatar] = useState(user!.avatar);
+  const [name, setName] = useState(user!.name);
+  const [driverLicense, setDriverLicense] = useState(user!.driver_license);
 
   function handleSignOut() {}
 
-  function handleEditPhoto() {}
+  async function handleEditPhoto() {
+    const result = await launchImageLibraryAsync({
+      mediaTypes: MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 1,
+    });
+
+    if (result.cancelled) {
+      return;
+    }
+
+    if (result.uri) {
+      setAvatar(result.uri);
+    }
+  }
 
   return (
     <Fragment>
@@ -58,7 +77,7 @@ export const Profile: React.FC = () => {
             </HeaderTop>
 
             <PhotoContainer>
-              <Photo source={{ uri: "https://github.com/wfl-junior.png" }} />
+              {avatar ? <Photo source={{ uri: avatar }} /> : null}
 
               <EditPhotoButton onPress={handleEditPhoto}>
                 <Feather
@@ -98,6 +117,8 @@ export const Profile: React.FC = () => {
                   placeholder="Nome"
                   autoCapitalize="words"
                   defaultValue={user!.name}
+                  value={name}
+                  onChangeText={setName}
                 />
 
                 <Input
@@ -112,6 +133,8 @@ export const Profile: React.FC = () => {
                   placeholder="CNH"
                   keyboardType="number-pad"
                   defaultValue={user!.driver_license}
+                  value={driverLicense}
+                  onChangeText={setDriverLicense}
                 />
               </Section>
             ) : (
