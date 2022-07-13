@@ -27,6 +27,7 @@ interface SignInCredentials {
 interface AuthContextData {
   user: UserState | null;
   isAuthenticated: boolean;
+  isUserLoading: boolean;
   signIn: (credentials: SignInCredentials) => Promise<void>;
   signOut: () => Promise<void>;
   updateUser: (user: UserState) => Promise<void>;
@@ -44,6 +45,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   children,
 }) => {
   const [user, setUser] = useState<AuthContextData["user"]>(null);
+  const [isUserLoading, setIsUserLoading] = useState(true);
 
   useEffect(() => {
     const userCollection = database.get<User>("users");
@@ -66,7 +68,8 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
           });
         }
       })
-      .catch(console.warn);
+      .catch(console.warn)
+      .finally(() => setIsUserLoading(false));
   }, []);
 
   const signIn: AuthContextData["signIn"] = useCallback(async credentials => {
@@ -130,6 +133,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
       value={{
         user,
         isAuthenticated: !!user,
+        isUserLoading,
         signIn,
         signOut,
         updateUser,

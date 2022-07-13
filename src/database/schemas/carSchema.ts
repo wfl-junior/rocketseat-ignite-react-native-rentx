@@ -32,7 +32,7 @@ export const carSchema = tableSchema({
       type: "string",
     },
     {
-      name: "thumnail",
+      name: "thumbnail",
       type: "string",
     },
   ],

@@ -7,13 +7,13 @@ import { AuthRoutes } from "./auth.routes";
 
 export const Routes: React.FC = () => {
   const [isReady, setIsReady] = useState(false);
-  const { isAuthenticated } = useAuthContext();
+  const { isAuthenticated, isUserLoading } = useAuthContext();
 
   const startApp = useCallback(() => {
     setIsReady(true);
   }, []);
 
-  if (!isReady) {
+  if (!isReady || isUserLoading) {
     return <Splash onEnd={startApp} />;
   }
 

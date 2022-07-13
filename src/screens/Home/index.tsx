@@ -39,16 +39,25 @@ export const Home: React.FC = () => {
       synchronize({
         database,
         pullChanges: async ({ lastPulledAt }) => {
-          const {
-            data: { changes, latestVersion },
-          } = await api.get<CarSyncPullDTO>(
-            `/cars/sync/pull?lastPulledVersion=${lastPulledAt || 0}`,
-          );
+          try {
+            const {
+              data: { changes, latestVersion },
+            } = await api.get<CarSyncPullDTO>(
+              `/cars/sync/pull?lastPulledVersion=${lastPulledAt || 0}`,
+            );
 
-          return {
-            changes,
-            timestamp: latestVersion,
-          };
+            return {
+              changes,
+              timestamp: latestVersion,
+            };
+          } catch (error) {
+            console.warn(error);
+
+            return {
+              changes: {},
+              timestamp: lastPulledAt || 0,
+            };
+          }
         },
         pushChanges: async ({ changes }) => {
           try {

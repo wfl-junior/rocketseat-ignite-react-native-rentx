@@ -185,7 +185,7 @@ export const Profile: React.FC = () => {
                   iconName="mail"
                   autoCapitalize="words"
                   editable={false}
-                  defaultValue={user!.email}
+                  value={user!.email}
                 />
 
                 <Input
