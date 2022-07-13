@@ -116,3 +116,8 @@ export const OptionTitle = styled.Text<OptionsProps>`
 `;
 
 export const Section = styled.View``;
+
+export const Footer = styled.View`
+  padding: 0 ${RFValue(24)}px;
+  margin-top: ${RFValue(8)}px;
+`;

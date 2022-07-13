@@ -9,7 +9,9 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
+import * as yup from "yup";
 import { BackButton } from "../../components/BackButton";
+import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { PasswordInput } from "../../components/PasswordInput";
 import { useAuthContext } from "../../contexts/AuthContext";
@@ -18,6 +20,7 @@ import {
   Container,
   Content,
   EditPhotoButton,
+  Footer,
   Header,
   HeaderTitle,
   HeaderTop,
@@ -30,8 +33,14 @@ import {
   Section,
 } from "./styles";
 
+const editDataValidationSchema = yup.object({
+  driverLicense: yup.string().required("A CNH é obrigatória"),
+  name: yup.string().required("O nome é obrigatório"),
+});
+
 export const Profile: React.FC = () => {
-  const { user, signOut } = useAuthContext();
+  const { user, signOut, updateUser } = useAuthContext();
+  const [isLoading, setIsLoading] = useState(false);
   const tabBarHeight = useBottomTabBarHeight();
   const [option, setOption] = useState<"data" | "password">("data");
   const [avatar, setAvatar] = useState(user!.avatar);
@@ -55,12 +64,37 @@ export const Profile: React.FC = () => {
       quality: 1,
     });
 
-    if (result.cancelled) {
-      return;
-    }
-
-    if (result.uri) {
+    if (!result.cancelled) {
       setAvatar(result.uri);
+    }
+  }
+
+  async function handleUpdateUser() {
+    setIsLoading(true);
+
+    try {
+      await editDataValidationSchema.validate({
+        name,
+        driverLicense,
+      });
+
+      await updateUser({
+        ...user!,
+        name,
+        avatar,
+        driver_license: driverLicense,
+      });
+
+      Alert.alert("Perfil atualizado com sucesso");
+    } catch (error) {
+      if (error instanceof yup.ValidationError) {
+        return Alert.alert("Opa!", error.message);
+      }
+
+      console.warn(error);
+      Alert.alert("Não foi possível salvar as alterações");
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -101,7 +135,7 @@ export const Profile: React.FC = () => {
             </PhotoContainer>
           </Header>
 
-          <Content style={{ marginBottom: tabBarHeight + RFValue(16) }}>
+          <Content>
             <Options>
               <Option
                 active={option === "data"}
@@ -157,6 +191,15 @@ export const Profile: React.FC = () => {
               </Section>
             )}
           </Content>
+
+          <Footer style={{ marginBottom: tabBarHeight + RFValue(16) }}>
+            <Button
+              title="Salvar alterações"
+              onPress={handleUpdateUser}
+              enabled={!isLoading}
+              isLoading={isLoading}
+            />
+          </Footer>
         </Container>
       </TouchableWithoutFeedback>
     </Fragment>

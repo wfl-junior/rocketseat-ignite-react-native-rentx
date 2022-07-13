@@ -25,10 +25,11 @@ interface SignInCredentials {
 }
 
 interface AuthContextData {
-  user: UserDTO | null;
+  user: UserState | null;
   isAuthenticated: boolean;
   signIn: (credentials: SignInCredentials) => Promise<void>;
   signOut: () => Promise<void>;
+  updateUser: (user: UserState) => Promise<void>;
 }
 
 const AuthContext = createContext({} as AuthContextData);
@@ -42,7 +43,7 @@ interface AuthContextProviderProps {
 export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   children,
 }) => {
-  const [user, setUser] = useState<UserState | null>(null);
+  const [user, setUser] = useState<AuthContextData["user"]>(null);
 
   useEffect(() => {
     const userCollection = database.get<User>("users");
@@ -109,9 +110,31 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
     setUser(null);
   }, []);
 
+  const updateUser: AuthContextData["updateUser"] = useCallback(async user => {
+    const userCollection = database.get<User>("users");
+
+    await database.write(async () => {
+      const userToUpdate = await userCollection.find(user!.id);
+
+      await userToUpdate.update(userData => {
+        userData.name = user.name;
+        userData.driver_license = user.driver_license;
+        userData.avatar = user.avatar;
+      });
+    });
+
+    setUser(user);
+  }, []);
+
   return (
     <AuthContext.Provider
-      value={{ user, isAuthenticated: !!user, signIn, signOut }}
+      value={{
+        user,
+        isAuthenticated: !!user,
+        signIn,
+        signOut,
+        updateUser,
+      }}
     >
       {children}
     </AuthContext.Provider>
