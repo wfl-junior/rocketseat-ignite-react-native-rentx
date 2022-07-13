@@ -1,3 +1,4 @@
+import { synchronize } from "@nozbe/watermelondb/sync";
 import { useNetInfo } from "@react-native-community/netinfo";
 import { Fragment, useEffect, useState } from "react";
 import { ActivityIndicator, Alert, FlatList, StatusBar } from "react-native";
@@ -5,7 +6,9 @@ import { RFValue } from "react-native-responsive-fontsize";
 import Logo from "../../assets/logo.svg";
 import { CarCard } from "../../components/CarCard";
 import { LoadingAnimation } from "../../components/LoadingAnimation";
-import { CarDTO } from "../../dtos/CarDTO";
+import { database } from "../../database";
+import { Car } from "../../database/models/Car";
+import { CarSyncPullDTO } from "../../dtos/CarSyncPullDTO";
 import { useAppStackNavigation } from "../../hooks/useAppStackNavigation";
 import { api } from "../../services/api";
 import { theme } from "../../styles/theme";
@@ -13,14 +16,17 @@ import { Container, Header, HeaderContent, TotalCars } from "./styles";
 
 export const Home: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [cars, setCars] = useState<CarDTO[]>([]);
+  const [cars, setCars] = useState<Car[]>([]);
   const { navigate } = useAppStackNavigation();
   const { isConnected } = useNetInfo();
 
   useEffect(() => {
-    api
-      .get<CarDTO[]>("/cars")
-      .then(response => setCars(response.data))
+    const carCollection = database.get<Car>("cars");
+
+    carCollection
+      .query()
+      .fetch()
+      .then(setCars)
       .catch(error => {
         console.warn(error);
         Alert.alert("Não foi possível buscar os dados.");
@@ -30,13 +36,32 @@ export const Home: React.FC = () => {
 
   useEffect(() => {
     if (isConnected) {
-      Alert.alert("Você está online");
-    } else {
-      Alert.alert("Você está offline");
+      synchronize({
+        database,
+        pullChanges: async ({ lastPulledAt }) => {
+          const {
+            data: { changes, latestVersion },
+          } = await api.get<CarSyncPullDTO>(
+            `/cars/sync/pull?lastPulledVersion=${lastPulledAt || 0}`,
+          );
+
+          return {
+            changes,
+            timestamp: latestVersion,
+          };
+        },
+        pushChanges: async ({ changes }) => {
+          try {
+            await api.post("/users/sync", changes.users);
+          } catch (error) {
+            console.warn(error);
+          }
+        },
+      });
     }
   }, [isConnected]);
 
-  function handleCarDetails(car: CarDTO) {
+  function handleCarDetails(car: Car) {
     navigate("CarDetails", { car });
   }
 
