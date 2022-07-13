@@ -1,3 +1,4 @@
+import { useNetInfo } from "@react-native-community/netinfo";
 import { Fragment, useEffect, useState } from "react";
 import { ActivityIndicator, Alert, FlatList, StatusBar } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
@@ -14,6 +15,7 @@ export const Home: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [cars, setCars] = useState<CarDTO[]>([]);
   const { navigate } = useAppStackNavigation();
+  const { isConnected } = useNetInfo();
 
   useEffect(() => {
     api
@@ -25,6 +27,14 @@ export const Home: React.FC = () => {
       })
       .finally(() => setIsLoading(false));
   }, []);
+
+  useEffect(() => {
+    if (isConnected) {
+      Alert.alert("Você está online");
+    } else {
+      Alert.alert("Você está offline");
+    }
+  }, [isConnected]);
 
   function handleCarDetails(car: CarDTO) {
     navigate("CarDetails", { car });
