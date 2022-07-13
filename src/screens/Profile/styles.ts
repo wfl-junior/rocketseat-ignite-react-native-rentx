@@ -1,7 +1,7 @@
 import Constants from "expo-constants";
 import { BorderlessButton, RectButton } from "react-native-gesture-handler";
 import { RFValue } from "react-native-responsive-fontsize";
-import styled from "styled-components/native";
+import styled, { css } from "styled-components/native";
 
 export const Container = styled.View`
   flex: 1;
@@ -58,4 +58,61 @@ export const EditPhotoButton = styled(RectButton)`
   position: absolute;
   bottom: ${RFValue(10)}px;
   right: ${RFValue(10)}px;
+`;
+
+export const Content = styled.View`
+  flex: 1;
+  padding: 0 ${RFValue(24)}px;
+  margin-top: ${RFValue(122)}px;
+`;
+
+export const Options = styled.View`
+  border-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: ${({ theme }) => theme.colors.line};
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: ${RFValue(24)}px;
+`;
+
+interface OptionsProps {
+  active?: boolean;
+}
+
+export const Option = styled.TouchableOpacity<OptionsProps>`
+  padding-bottom: ${RFValue(14)}px;
+  margin-right: ${RFValue(24)}px;
+
+  ${({ active, theme }) => {
+    if (active) {
+      return css`
+        border-style: solid;
+        border-bottom-width: 2px;
+        border-bottom-color: ${theme.colors.main.DEFAULT};
+      `;
+    }
+
+    return "";
+  }};
+`;
+
+export const OptionTitle = styled.Text<OptionsProps>`
+  color: ${({ active, theme }) => {
+    if (active) {
+      return theme.colors.title;
+    }
+
+    return theme.colors.text.detail;
+  }};
+
+  font-size: ${RFValue(20)}px;
+
+  font-family: ${({ active, theme }) => {
+    if (active) {
+      return theme.fonts.secondary[600];
+    }
+
+    return theme.fonts.secondary[400];
+  }};
 `;
