@@ -5,6 +5,7 @@ import CarIcon from "../assets/car.svg";
 import HomeIcon from "../assets/house.svg";
 import PeopleIcon from "../assets/people.svg";
 import { MyCars } from "../screens/MyCars";
+import { Profile } from "../screens/Profile";
 import { theme } from "../styles/theme";
 import { AppStackRoutes } from "./app.stack.routes";
 
@@ -54,7 +55,7 @@ export const AppTabRoutes: React.FC = () => (
 
     <Screen
       name="Profile"
-      component={AppStackRoutes}
+      component={Profile}
       options={{
         tabBarIcon: ({ color }) => (
           <PeopleIcon width={RFValue(24)} height={RFValue(24)} color={color} />
