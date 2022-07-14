@@ -1,7 +1,8 @@
 import { Feather } from "@expo/vector-icons";
+import { useNetInfo } from "@react-native-community/netinfo";
 import { format } from "date-fns";
 import Constants from "expo-constants";
-import { Fragment, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { Alert, StatusBar, StyleSheet } from "react-native";
 import Animated, {
   Extrapolate,
@@ -15,6 +16,7 @@ import { Acessory } from "../../components/Acessory";
 import { BackButton } from "../../components/BackButton";
 import { Button } from "../../components/Button";
 import { ImageSlider } from "../../components/ImageSlider";
+import { CarDTO } from "../../dtos/CarDTO";
 import { useAppStackNavigation } from "../../hooks/useAppStackNavigation";
 import { useAppStackRoute } from "../../hooks/useAppStackRoute";
 import { api } from "../../services/api";
@@ -36,6 +38,7 @@ import {
   Footer,
   Header,
   Model,
+  OfflineInfo,
   Period,
   Price,
   Rent,
@@ -57,11 +60,13 @@ const styles = StyleSheet.create({
 });
 
 export const SchedulingDetails: React.FC = () => {
+  const { isConnected } = useNetInfo();
   const [isLoading, setIsLoading] = useState(false);
   const { navigate } = useAppStackNavigation();
   const {
     params: { car, dates },
   } = useAppStackRoute<"SchedulingDetails">();
+  const [carUpdated, setCarUpdated] = useState(car);
 
   const { startDateFormatted, endDateFormatted } = useMemo(() => {
     const startDateFormatted = format(
@@ -100,25 +105,31 @@ export const SchedulingDetails: React.FC = () => {
     ),
   }));
 
+  useEffect(() => {
+    if (isConnected) {
+      api
+        .get<CarDTO>(`/cars/${car.id}`)
+        .then(response => setCarUpdated(response.data))
+        .catch(error => {
+          console.warn(error);
+          Alert.alert("Não foi possível buscar os dados mais recentes.");
+        });
+    }
+  }, [isConnected]);
+
+  const rentTotal = useMemo((): number => {
+    return carUpdated.price * dates.length;
+  }, [carUpdated.price, dates]);
+
   async function handleRentNow() {
     setIsLoading(true);
 
     try {
-      const response = await api.get<{
-        id: string;
-        unavailable_dates: string[];
-      }>(`/schedules_bycars/${car.id}`);
-
-      await api.post("/schedules_byuser", {
-        user_id: 1,
-        car,
-        startDate: startDateFormatted,
-        endDate: endDateFormatted,
-      });
-
-      await api.put(`/schedules_bycars/${car.id}`, {
-        id: car.id,
-        unavailable_dates: [...response.data.unavailable_dates, ...dates],
+      await api.post("/rentals", {
+        car_id: carUpdated.id,
+        start_date: new Date(dates[0]),
+        end_date: new Date(dates[dates.length - 1]),
+        total: rentTotal,
       });
 
       navigate("Confirmation", {
@@ -127,8 +138,8 @@ export const SchedulingDetails: React.FC = () => {
           "Agora você só precisa ir\naté a concessionária da RENTX\npegar o seu automóvel.",
       });
     } catch (error) {
-      console.warn(error);
       setIsLoading(false);
+      console.warn(error);
       Alert.alert("Não foi possível concluir o agendamento.");
     }
   }
@@ -149,7 +160,7 @@ export const SchedulingDetails: React.FC = () => {
 
           <Animated.View style={carSliderStyleAnimation}>
             <CarImages>
-              <ImageSlider photos={car.photos} />
+              <ImageSlider photos={carUpdated.photos} />
             </CarImages>
           </Animated.View>
         </Animated.View>
@@ -169,18 +180,21 @@ export const SchedulingDetails: React.FC = () => {
         >
           <Details>
             <Description>
-              <Brand>{car.brand}</Brand>
-              <Model>{car.name}</Model>
+              <Brand>{carUpdated.brand}</Brand>
+              <Model>{carUpdated.name}</Model>
             </Description>
 
             <Rent>
-              <Period>{car.period}</Period>
-              <Price>{formatPrice(car.price)}</Price>
+              <Period>{carUpdated.period}</Period>
+
+              <Price>
+                {isConnected ? formatPrice(carUpdated.price) : "R$ ..."}
+              </Price>
             </Rent>
           </Details>
 
           <Accessories>
-            {car.accessories.map(accessory => (
+            {carUpdated.accessories.map(accessory => (
               <Acessory
                 key={accessory.type}
                 icon={getAccessoryIcon(accessory.type)}
@@ -220,13 +234,11 @@ export const SchedulingDetails: React.FC = () => {
 
             <RentalPriceDetails>
               <RentalPriceQuota>
-                {formatPrice(car.price)} x{dates.length} diária
+                {formatPrice(carUpdated.price)} x{dates.length} diária
                 {dates.length !== 1 && "s"}
               </RentalPriceQuota>
 
-              <RentalPriceTotal>
-                {formatPrice(car.price * dates.length)}
-              </RentalPriceTotal>
+              <RentalPriceTotal>{formatPrice(rentTotal)}</RentalPriceTotal>
             </RentalPriceDetails>
           </RentalPrice>
         </Animated.ScrollView>
@@ -236,9 +248,15 @@ export const SchedulingDetails: React.FC = () => {
             title="Alugar agora"
             color={theme.colors.success}
             onPress={handleRentNow}
-            enabled={!isLoading}
+            enabled={!(isLoading || isConnected === false)}
             isLoading={isLoading}
           />
+
+          {isConnected === false && (
+            <OfflineInfo>
+              Conecte-se à Internet para poder alugar um carro
+            </OfflineInfo>
+          )}
         </Footer>
       </Container>
     </Fragment>

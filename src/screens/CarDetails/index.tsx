@@ -85,13 +85,15 @@ export const CarDetails: React.FC = () => {
         .then(response => setCarUpdated(response.data))
         .catch(error => {
           console.warn(error);
-          Alert.alert("Não foi possível buscar os dados.");
+          Alert.alert("Não foi possível buscar os dados mais recentes.");
         });
     }
   }, [isConnected]);
 
   function handleChooseRentalPeriod() {
-    navigate("Scheduling", { car: carUpdated! });
+    if (carUpdated) {
+      navigate("Scheduling", { car: carUpdated });
+    }
   }
 
   return (
