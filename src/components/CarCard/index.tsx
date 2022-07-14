@@ -1,7 +1,7 @@
 import { useNetInfo } from "@react-native-community/netinfo";
 import { RectButtonProps } from "react-native-gesture-handler";
 import { RFValue } from "react-native-responsive-fontsize";
-import { Car } from "../../database/models/Car";
+import { ICar } from "../../database/models/Car";
 import { theme } from "../../styles/theme";
 import { formatPrice } from "../../utils/formatPrice";
 import { getAccessoryIcon } from "../../utils/getAccessoryIcon";
@@ -18,7 +18,7 @@ import {
 } from "./styles";
 
 interface CarCardProps extends RectButtonProps {
-  car: Car;
+  car: ICar;
 }
 
 export const CarCard: React.FC<CarCardProps> = ({ car, ...props }) => {

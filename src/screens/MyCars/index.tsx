@@ -1,4 +1,5 @@
 import { AntDesign } from "@expo/vector-icons";
+import { format, parseISO } from "date-fns";
 import { Fragment, useEffect, useState } from "react";
 import { Alert, FlatList, StatusBar } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
@@ -30,8 +31,16 @@ export const MyCars: React.FC = () => {
 
   useEffect(() => {
     api
-      .get<UserScheduleDTO[]>("/schedules_byuser?user_id=1")
-      .then(response => setSchedules(response.data))
+      .get<UserScheduleDTO[]>("/rentals")
+      .then(response => {
+        setSchedules(
+          response.data.map(schedule => ({
+            ...schedule,
+            start_date: format(parseISO(schedule.start_date), "dd/MM/yyyy"),
+            end_date: format(parseISO(schedule.end_date), "dd/MM/yyyy"),
+          })),
+        );
+      })
       .catch(error => {
         console.warn(error);
         Alert.alert("Não foi possível buscar os dados.");
@@ -80,7 +89,7 @@ export const MyCars: React.FC = () => {
                     <CarFooterTitle>Período</CarFooterTitle>
 
                     <CarFooterPeriod>
-                      <CarFooterDate>{schedule.startDate}</CarFooterDate>
+                      <CarFooterDate>{schedule.start_date}</CarFooterDate>
 
                       <AntDesign
                         name="arrowright"
@@ -89,7 +98,7 @@ export const MyCars: React.FC = () => {
                         style={{ marginHorizontal: RFValue(10) }}
                       />
 
-                      <CarFooterDate>{schedule.endDate}</CarFooterDate>
+                      <CarFooterDate>{schedule.end_date}</CarFooterDate>
                     </CarFooterPeriod>
                   </CarFooter>
                 </CarWrapper>

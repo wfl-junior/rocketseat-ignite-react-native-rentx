@@ -1,7 +1,18 @@
 import { Model } from "@nozbe/watermelondb";
 import { field } from "@nozbe/watermelondb/decorators";
 
-export class Car extends Model {
+export interface ICar {
+  id: string;
+  brand: string;
+  name: string;
+  about: string;
+  period: string;
+  price: number;
+  fuel_type: string;
+  thumbnail: string;
+}
+
+export class Car extends Model implements ICar {
   static table = "cars";
 
   @field("brand")

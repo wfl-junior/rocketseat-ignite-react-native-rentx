@@ -7,7 +7,7 @@ import Logo from "../../assets/logo.svg";
 import { CarCard } from "../../components/CarCard";
 import { LoadingAnimation } from "../../components/LoadingAnimation";
 import { database } from "../../database";
-import { Car } from "../../database/models/Car";
+import { Car, ICar } from "../../database/models/Car";
 import { CarSyncPullDTO } from "../../dtos/CarSyncPullDTO";
 import { useAppStackNavigation } from "../../hooks/useAppStackNavigation";
 import { api } from "../../services/api";
@@ -16,7 +16,7 @@ import { Container, Header, HeaderContent, TotalCars } from "./styles";
 
 export const Home: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [cars, setCars] = useState<Car[]>([]);
+  const [cars, setCars] = useState<ICar[]>([]);
   const { navigate } = useAppStackNavigation();
   const { isConnected } = useNetInfo();
 
@@ -26,7 +26,7 @@ export const Home: React.FC = () => {
     carCollection
       .query()
       .fetch()
-      .then(cars => setCars(cars.map(car => car._raw as unknown as Car)))
+      .then(cars => setCars(cars.map(car => car._raw as unknown as ICar)))
       .catch(error => {
         console.warn(error);
         Alert.alert("Não foi possível buscar os dados.");
@@ -70,7 +70,7 @@ export const Home: React.FC = () => {
     }
   }, [isConnected]);
 
-  function handleCarDetails(car: Car) {
+  function handleCarDetails(car: ICar) {
     navigate("CarDetails", { car });
   }
 
