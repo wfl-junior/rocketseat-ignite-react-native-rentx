@@ -1,3 +1,4 @@
+import { useNetInfo } from "@react-native-community/netinfo";
 import { RectButtonProps } from "react-native-gesture-handler";
 import { RFValue } from "react-native-responsive-fontsize";
 import { Car } from "../../database/models/Car";
@@ -21,6 +22,8 @@ interface CarCardProps extends RectButtonProps {
 }
 
 export const CarCard: React.FC<CarCardProps> = ({ car, ...props }) => {
+  const { isConnected } = useNetInfo();
+
   const Icon = getAccessoryIcon(car.fuel_type);
 
   return (
@@ -32,7 +35,7 @@ export const CarCard: React.FC<CarCardProps> = ({ car, ...props }) => {
         <About>
           <Rent>
             <Period>{car.period}</Period>
-            <Price>{formatPrice(car.price)}</Price>
+            <Price>{isConnected ? formatPrice(car.price) : "R$ ..."}</Price>
           </Rent>
 
           <Icon

@@ -1,6 +1,7 @@
+import { useNetInfo } from "@react-native-community/netinfo";
 import Constants from "expo-constants";
-import { Fragment } from "react";
-import { StatusBar, StyleSheet } from "react-native";
+import { Fragment, useEffect, useState } from "react";
+import { Alert, StatusBar, StyleSheet } from "react-native";
 import Animated, {
   Extrapolate,
   interpolate,
@@ -13,8 +14,10 @@ import { Acessory } from "../../components/Acessory";
 import { BackButton } from "../../components/BackButton";
 import { Button } from "../../components/Button";
 import { ImageSlider } from "../../components/ImageSlider";
+import { CarDTO } from "../../dtos/CarDTO";
 import { useAppStackNavigation } from "../../hooks/useAppStackNavigation";
 import { useAppStackRoute } from "../../hooks/useAppStackRoute";
+import { api } from "../../services/api";
 import { theme } from "../../styles/theme";
 import { formatPrice } from "../../utils/formatPrice";
 import { getAccessoryIcon } from "../../utils/getAccessoryIcon";
@@ -29,6 +32,7 @@ import {
   Footer,
   Header,
   Model,
+  OfflineInfo,
   Period,
   Price,
   Rent,
@@ -45,6 +49,8 @@ const styles = StyleSheet.create({
 
 export const CarDetails: React.FC = () => {
   const { navigate } = useAppStackNavigation();
+  const [carUpdated, setCarUpdated] = useState<CarDTO | null>(null);
+  const { isConnected } = useNetInfo();
   const {
     params: { car },
   } = useAppStackRoute<"CarDetails">();
@@ -72,8 +78,20 @@ export const CarDetails: React.FC = () => {
     ),
   }));
 
+  useEffect(() => {
+    if (isConnected) {
+      api
+        .get<CarDTO>(`/cars/${car.id}`)
+        .then(response => setCarUpdated(response.data))
+        .catch(error => {
+          console.warn(error);
+          Alert.alert("Não foi possível buscar os dados.");
+        });
+    }
+  }, [isConnected]);
+
   function handleChooseRentalPeriod() {
-    navigate("Scheduling", { car });
+    navigate("Scheduling", { car: carUpdated! });
   }
 
   return (
@@ -92,7 +110,13 @@ export const CarDetails: React.FC = () => {
 
           <Animated.View style={carSliderStyleAnimation}>
             <CarImages>
-              <ImageSlider photos={car.photos} />
+              <ImageSlider
+                photos={
+                  carUpdated?.photos ?? [
+                    { id: car.thumbnail, photo: car.thumbnail },
+                  ]
+                }
+              />
             </CarImages>
           </Animated.View>
         </Animated.View>
@@ -118,19 +142,26 @@ export const CarDetails: React.FC = () => {
 
             <Rent>
               <Period>{car.period}</Period>
-              <Price>{formatPrice(car.price)}</Price>
+
+              <Price>
+                {isConnected && carUpdated
+                  ? formatPrice(carUpdated.price)
+                  : "R$ ..."}
+              </Price>
             </Rent>
           </Details>
 
-          <Accessories>
-            {car.accessories.map(accessory => (
-              <Acessory
-                key={accessory.type}
-                icon={getAccessoryIcon(accessory.type)}
-                name={accessory.name}
-              />
-            ))}
-          </Accessories>
+          {carUpdated && (
+            <Accessories>
+              {carUpdated.accessories.map(accessory => (
+                <Acessory
+                  key={accessory.type}
+                  icon={getAccessoryIcon(accessory.type)}
+                  name={accessory.name}
+                />
+              ))}
+            </Accessories>
+          )}
 
           <About>
             {car.about}
@@ -149,7 +180,14 @@ export const CarDetails: React.FC = () => {
           <Button
             title="Escolher período do aluguel"
             onPress={handleChooseRentalPeriod}
+            enabled={!!isConnected}
           />
+
+          {isConnected === false && (
+            <OfflineInfo>
+              Conecte-se à Internet para ver mais detalhes e agendar seu carro
+            </OfflineInfo>
+          )}
         </Footer>
       </Container>
     </Fragment>

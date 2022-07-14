@@ -121,3 +121,11 @@ export const Footer = styled.View`
   padding: 0 ${RFValue(24)}px;
   margin-top: ${RFValue(8)}px;
 `;
+
+export const OfflineInfo = styled.Text`
+  color: ${({ theme }) => theme.colors.main.DEFAULT};
+  font-size: ${RFValue(10)}px;
+  font-family: ${({ theme }) => theme.fonts.primary[400]};
+  text-align: center;
+  margin-top: ${RFValue(8)}px;
+`;

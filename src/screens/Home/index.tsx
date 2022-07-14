@@ -26,7 +26,7 @@ export const Home: React.FC = () => {
     carCollection
       .query()
       .fetch()
-      .then(setCars)
+      .then(cars => setCars(cars.map(car => car._raw as unknown as Car)))
       .catch(error => {
         console.warn(error);
         Alert.alert("Não foi possível buscar os dados.");

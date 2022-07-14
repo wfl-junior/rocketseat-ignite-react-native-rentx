@@ -1,4 +1,5 @@
 import { Feather } from "@expo/vector-icons";
+import { useNetInfo } from "@react-native-community/netinfo";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { launchImageLibraryAsync, MediaTypeOptions } from "expo-image-picker";
 import { Fragment, useState } from "react";
@@ -25,6 +26,7 @@ import {
   HeaderTitle,
   HeaderTop,
   LogoutButton,
+  OfflineInfo,
   Option,
   Options,
   OptionTitle,
@@ -39,6 +41,7 @@ const editDataValidationSchema = yup.object({
 });
 
 export const Profile: React.FC = () => {
+  const { isConnected } = useNetInfo();
   const { user, signOut, updateUser } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
   const tabBarHeight = useBottomTabBarHeight();
@@ -210,9 +213,17 @@ export const Profile: React.FC = () => {
             <Button
               title="Salvar alterações"
               onPress={handleUpdateUser}
-              enabled={!isLoading}
               isLoading={isLoading}
+              enabled={
+                !(isLoading || (option === "password" && isConnected === false))
+              }
             />
+
+            {option === "password" && isConnected === false && (
+              <OfflineInfo>
+                Conecte-se à Internet para poder alterar sua senha
+              </OfflineInfo>
+            )}
           </Footer>
         </Container>
       </TouchableWithoutFeedback>
